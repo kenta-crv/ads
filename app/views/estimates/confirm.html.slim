@@ -1,0 +1,72 @@
+=  form_for @estimate, url: thanks_estimates_path(@estimate) do |f|
+  br
+  br
+  .tops-wrapper
+    h2.headline
+      | お見積もり確認フォーム
+  .company-wrapper
+    table.company.responsive-table
+      colgroup
+        col.col-1
+        col.col-2
+        col.col-3
+      tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
+          | お名前
+        td.responsive-cell
+         = f.hidden_field :name
+         = @estimate.name
+      tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
+          | 電話番号
+        td.responsive-cell
+          = f.hidden_field :tel
+          = @estimate.tel
+      tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
+          | ご住所
+        td.responsive-cell
+          = f.hidden_field :address
+          = @estimate.address
+      tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
+          | メールアドレス
+        td.responsive-cell
+          = f.hidden_field :email
+          = @estimate.email
+      tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
+          | 希望チェックイン日
+        td.responsive-cell
+          = f.hidden_field :start
+          = @estimate.start
+      tr
+        td.label-cell
+          strong.label.label-blue 任意
+        td.arrow-box-cell
+          | 希望チェックアウト日
+        td.responsive-cell
+          = f.hidden_field :end
+          = @estimate.end
+      tr
+        td.label-cell
+          strong.label.label-blue 任意
+        td.arrow-box-cell
+          | 要望・備考
+        td.responsive-cell
+          = f.hidden_field :remarks
+          = @estimate.remarks
+      tr
+        td colspan="3"
+         .center
+          = f.submit "送信", class: "btn btn-primary"

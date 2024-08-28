@@ -1,0 +1,29 @@
+- set_meta_tags noindex: true
+
+.tops-wrapper
+br
+  h2.headline  見積もり編集
+  =  form_for @estimate, url: estimate_path(@estimate) do |f|
+   table.company
+    colgroup
+      col width="10%"
+      col width="20%"
+      col width="70%"
+    tr
+     td
+      strong.label 必須
+     td
+       |担当者の一言
+     td
+      = f.text_area :word
+    tr
+     td
+      strong.label.label-blue 任意
+     td
+       |送信フラグ変更
+     td
+      = f.select(:send_mail_flag, [\
+      ["送信済","true"],\
+      ["未送信","false"]\
+      ])
+     = render 'form', f: f, btn_name: "更新する"
