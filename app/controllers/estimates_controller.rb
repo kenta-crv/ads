@@ -65,8 +65,8 @@ class EstimatesController < ApplicationController
         :postnumber, #郵便番号
         :address, #住所
         :people, #屋内の場合、使用が想定される人数
-        :start, #設置箇所
-        :end,
+        :check_in_date, #設置箇所
+        :check_out_date,
         :remarks #要望
       )
     end

@@ -67,6 +67,10 @@ Rails.application.routes.draw do
    end
   end
 
+  post 'checkout', to: 'payments#checkout'
+  get 'success', to: 'payments#success'
+  get 'cancel', to: 'payments#cancel'
+
   resources :estimates do
     collection do
       post :confirm

@@ -13,7 +13,6 @@
 //= require plugins/paragraph_format.min.js
 //= require rails-ujs
 //= require activestorage
-//= require turbolinks
 //= require_tree .
 
 $(function() {
@@ -27,3 +26,11 @@ $(function() {
         }
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    flatpickr(".flatpickr", {
+      enableTime: false,
+      dateFormat: "Y-m-d",
+      minDate: "today",
+    });
+  });

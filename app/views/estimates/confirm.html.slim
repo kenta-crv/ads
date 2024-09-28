@@ -48,16 +48,16 @@
         td.arrow-box-cell
           | 希望チェックイン日
         td.responsive-cell
-          = f.hidden_field :start
-          = @estimate.start
+          = f.hidden_field :check_in_date
+          = @estimate.check_in_date
       tr
         td.label-cell
           strong.label.label-blue 任意
         td.arrow-box-cell
           | 希望チェックアウト日
         td.responsive-cell
-          = f.hidden_field :end
-          = @estimate.end
+          = f.hidden_field :check_out_date
+          = @estimate.check_out_date
       tr
         td.label-cell
           strong.label.label-blue 任意

@@ -73,8 +73,8 @@ ActiveRecord::Schema.define(version: 2024_08_28_175707) do
     t.string "postnumber"
     t.string "address"
     t.string "people"
-    t.date "start"
-    t.date "end"
+    t.date "check_in_date"
+    t.date "check_out_date"
     t.string "remarks"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

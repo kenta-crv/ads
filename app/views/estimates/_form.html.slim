@@ -50,7 +50,7 @@
           | 希望チェックイン日
         td.responsive-cell
          .input-container
-          = f.date_field :start
+          = f.text_field :check_in_date, class: 'flatpickr', data: { target: 'flatpickr' } 
       tr
          td.label-cell
            strong.label.label-blue
@@ -58,7 +58,7 @@
            | 希望チェックアウト日
          td.responsive-cell
           .input-container
-           = f.date_field :end
+            = f.text_field :check_out_date, class: 'flatpickr', data: { target: 'flatpickr' }
       tr
         td.label-cell
           strong.label.label-blue 任意

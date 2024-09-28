@@ -15,10 +15,12 @@
  *= require_self
  */
 
+ @import 'flatpickr/dist/flatpickr.css';
 
  $main_color: #0058A6;
  $sub_color: #e6ecf0;;
  $asort_color: #0058A6;
+
  /*ヘッダーのベース設定*/
 header {
 background-color:white;

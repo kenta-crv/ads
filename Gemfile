@@ -91,3 +91,6 @@ gem 'ransack'
 
 gem 'kaminari-bootstrap', '~> 3.0.1'
 gem 'dotenv-rails', groups: [:development, :test]
+gem 'flatpickr'
+
+gem 'paypal-checkout-sdk'

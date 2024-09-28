@@ -101,6 +101,7 @@ GEM
     erubi (1.10.0)
     execjs (2.8.1)
     ffi (1.15.5)
+    flatpickr (4.6.13.1)
     font-awesome-rails (4.7.0.8)
       railties (>= 3.2, < 8.0)
     globalid (1.0.0)
@@ -155,6 +156,9 @@ GEM
     nokogiri (1.13.3-x86_64-darwin)
       racc (~> 1.4)
     orm_adapter (0.5.0)
+    paypal-checkout-sdk (1.0.5)
+      paypalhttp (~> 1.0.1)
+    paypalhttp (1.0.1)
     public_suffix (4.0.6)
     puma (3.12.6)
     racc (1.6.0)
@@ -280,6 +284,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   devise
   dotenv-rails
+  flatpickr
   font-awesome-rails
   jbuilder (~> 2.5)
   jquery-rails
@@ -287,6 +292,7 @@ DEPENDENCIES
   kaminari-bootstrap (~> 3.0.1)
   listen (>= 3.0.5, < 3.2)
   meta-tags
+  paypal-checkout-sdk
   puma (~> 3.11)
   rails (~> 5.2.3)
   ransack

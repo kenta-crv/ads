@@ -1,4 +1,6 @@
 br
  .tops-wrapper
     h2.headline
-       | 送信完了しました。担当者より折り返しメールを差し上げます。
+       | ご利用ありがとうございます。以下より決済を実行し完了となります。
+    = form_with url: checkout_path(estimate_id: @estimate.id), method: :post, local: true do
+      = submit_tag 'Pay with PayPal', class: 'btn btn-primary'
