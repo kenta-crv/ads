@@ -1,8 +1,8 @@
 class EstimateMailer < ActionMailer::Base
-  default from: "info@ri-plus.jp"
+  default from: "info@ebisu-hotel.tokyo"
   def received_email(estimate)
     @estimate = estimate
-    mail to: "info@ri-plus.jp"
+    mail to: "info@ebisu-hotel.tokyo"
     mail(subject: 'サービス賃貸') do |format|
       format.text
     end
@@ -11,7 +11,7 @@ class EstimateMailer < ActionMailer::Base
   def send_email(estimate)
     @estimate = estimate
     mail to: estimate.email
-    mail(subject: '恵比寿マンスリーマンションへのお問い合わせありがとうございました。') do |format|
+    mail(subject: 'お問い合わせありがとうございました。') do |format|
       format.text
     end
   end
