@@ -94,3 +94,4 @@ gem 'dotenv-rails', groups: [:development, :test]
 gem 'flatpickr'
 
 gem 'paypal-checkout-sdk'
+gem 'paypal-sdk-rest'

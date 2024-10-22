@@ -3,7 +3,7 @@
   br
   .tops-wrapper
     h2.headline
-      | お見積もり確認フォーム
+      | 確認フォーム
   .company-wrapper
     table.company.responsive-table
       colgroup
@@ -58,6 +58,9 @@
         td.responsive-cell
           = f.hidden_field :check_out_date
           = @estimate.check_out_date
+
+          | ¥ #{@normal_price_per_night} × #{@num_normal_days} + ¥ #{@peak_price_per_night} × #{@num_peak_days} = ¥ #{@total_price.to_s}
+
       tr
         td.label-cell
           strong.label.label-blue 任意
@@ -69,4 +72,4 @@
       tr
         td colspan="3"
          .center
-          = f.submit "送信", class: "btn btn-primary"
+          = f.submit "決済画面へ移動する", class: "btn btn-primary"

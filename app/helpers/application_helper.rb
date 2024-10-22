@@ -1,9 +1,9 @@
 module ApplicationHelper
   def default_meta_tags
     {
-      site: "特定技能外国人の求人紹介なら｜Future Jobs",
-      title:"<%= yield(:title) | 合同会社ファクトル' %>",
-      description: "特定技能・就労ビザ・永住ビザの外国人の求人紹介ならFuture Jobsにお任せください。豊富な案件で御社をサポートします。",
+      site: "恵比寿の高級マンション民泊貸出",
+      title:"<%= 恵比寿の高級マンション民泊貸出%>",
+      description: "恵比寿駅徒歩8分の好立地マンションの民泊サイトです。",
       canonical: request.original_url,  # 優先されるurl
       charset: "UTF-8",
       reverse: true,

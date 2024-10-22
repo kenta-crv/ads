@@ -1,6 +1,8 @@
 br
  .tops-wrapper
     h2.headline
-       | ご利用ありがとうございます。以下より決済を実行し完了となります。
+       | お申し込み頂きありがとうございます。
+    p
+       | ご利用ありがとうございます。以下より決済を実行しお申し込みが完了となります。
     = form_with url: checkout_path(estimate_id: @estimate.id), method: :post, local: true do
       = submit_tag 'Pay with PayPal', class: 'btn btn-primary'
