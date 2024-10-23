@@ -52,15 +52,22 @@
           = @estimate.check_in_date
       tr
         td.label-cell
-          strong.label.label-blue 任意
+          strong.label 必須
         td.arrow-box-cell
           | 希望チェックアウト日
         td.responsive-cell
           = f.hidden_field :check_out_date
           = @estimate.check_out_date
 
-          | ¥ #{@normal_price_per_night} × #{@num_normal_days} + ¥ #{@peak_price_per_night} × #{@num_peak_days} = ¥ #{@total_price.to_s}
-
+      tr
+        td.label-cell
+          strong.label
+        td.arrow-box-cell
+          span(style="color: red; font-weight: bold;")
+            | お支払い金額
+        td.responsive-cell
+          span(style="color: red; font-weight: bold;")
+           |¥#{@total_price.to_s} (¥#{@normal_price_per_night} × #{@num_normal_days} + ¥#{@peak_price_per_night} × #{@num_peak_days})
       tr
         td.label-cell
           strong.label.label-blue 任意
