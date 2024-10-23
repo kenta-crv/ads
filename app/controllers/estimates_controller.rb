@@ -115,7 +115,7 @@ class EstimatesController < ApplicationController
         (Date.new(check_in_date.year, 7, 1)..Date.new(check_in_date.year, 8, 31))
       ]
     
-      normal_price_per_night = 55000.00
+      normal_price_per_night = 1.00
       peak_price_per_night = 88000.00
       total_price = 0
       num_normal_days = 0
