@@ -1,9 +1,0 @@
-development:
-  mode: "sandbox"  # テストモード
-  client_id: "YOUR_SANDBOX_CLIENT_ID"
-  client_secret: "YOUR_SANDBOX_CLIENT_SECRET"
-
-production:
-  mode: "live"  # 本番モード
-  client_id: "YOUR_LIVE_CLIENT_ID"
-  client_secret: "YOUR_LIVE_CLIENT_SECRET"
