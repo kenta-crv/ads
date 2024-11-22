@@ -6,7 +6,13 @@ class PaymentsController < ApplicationController
   before_action :set_estimate, only: [:checkout]
 
   def checkout
-    
+
+    if @estimate.nil?
+      Rails.logger.info("対象の見積もりが存在しません。")
+      redirect_to cancel_url
+      return
+    end
+
     check_in_date = @estimate.check_in_date
     check_out_date = @estimate.check_out_date
   
@@ -39,11 +45,11 @@ class PaymentsController < ApplicationController
     if result.success?
       # 生成されたリンクを取得
       payment_link = result.data[:payment_link][:url]
-      Rails.logger.info("Payment Link: #{payment_link}")
+      Rails.logger.info("決済リンク: #{payment_link}, Estimate ID: #{@estimate.id}")
       redirect_to payment_link
     else
       # エラー処理
-      Rails.logger.error("Error creating payment link: #{result.errors}")
+      Rails.logger.error("決済に失敗しました。: #{result.errors}, Estimate ID: #{@estimate.id}")
       redirect_to cancel_url
     end
 
