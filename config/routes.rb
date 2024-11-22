@@ -67,6 +67,7 @@ Rails.application.routes.draw do
    end
   end
 
+  # Square（決済）
   post 'checkout', to: 'payments#checkout'
   get 'success', to: 'payments#success'
   get 'cancel', to: 'payments#cancel'
@@ -79,4 +80,5 @@ Rails.application.routes.draw do
   end
 
   resources :offers, only: [:index, :show]
+
 end

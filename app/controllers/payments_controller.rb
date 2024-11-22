@@ -1,45 +1,60 @@
 class PaymentsController < ApplicationController
+  require 'square'
+  require 'securerandom'
+  require 'bigdecimal'
+
   before_action :set_estimate, only: [:checkout]
 
   def checkout
+    
     check_in_date = @estimate.check_in_date
     check_out_date = @estimate.check_out_date
   
     num_days = (check_out_date - check_in_date).to_i
     total_price = calculate_total_price(check_in_date, check_out_date, num_days)
-  
-    request = PayPalCheckoutSdk::Orders::OrdersCreateRequest.new
-    request.prefer('return=representation')
-    request.request_body({
-      intent: 'CAPTURE',
-      purchase_units: [{
-        amount: {
-          currency_code: 'JPY',
-          value: total_price.to_s
-        }
-      }],
-      application_context: {
-        return_url: success_url(estimate_id: @estimate.id),
-        cancel_url: cancel_url
-      }
-    })
-  
-    begin
-      response = PayPalClient.client.execute(request)
-      redirect_to response.result.links.find { |v| v.rel == 'approve' }.href
-    rescue PayPalHttp::HttpError => e
-      render plain: e.status_code
-    end
-  end
-  
 
-  def success
-    # 支払い成功時の処理
-    # ここで必要な処理を追加できます。例えば、データベースの更新や購入完了ページへのリダイレクトなど。
+    # Square APIを使用してCheckoutを作成
+    client = Square::Client.new(
+      access_token: ENV['SQUARE_TOKEN'],
+      environment: ENV['SQUARE_ENV']
+    )
+
+    result = client.checkout.create_payment_link(
+      body: {
+        idempotency_key: SecureRandom.uuid,
+        quick_pay: {
+          name: "estimateId:#{@estimate.id}", # 見積もりID
+          price_money: {
+            amount: BigDecimal(total_price.to_s).ceil.to_i, # `total_price` を `BigDecimal` 型に変換し、小数点以下を切り上げて整数に変換
+            currency: "JPY"
+          },
+          location_id: ENV['SQUARE_LOCATION_ID']
+        },
+        checkout_options: {
+          redirect_url: success_url(estimate_id: @estimate.id) # 決済成功時のリダイレクトURL
+        }
+      }
+    )
+  
+    if result.success?
+      # 生成されたリンクを取得
+      payment_link = result.data[:payment_link][:url]
+      Rails.logger.info("Payment Link: #{payment_link}")
+      redirect_to payment_link
+    else
+      # エラー処理
+      Rails.logger.error("Error creating payment link: #{result.errors}")
+      redirect_to cancel_url
+    end
+
+  end
+
+  def thanks
+    # 支払い完了後のサンキューページ
   end
 
   def cancel
-    # 支払いキャンセル時の処理
+    # キャンセルページ
   end
 
   private
@@ -65,7 +80,7 @@ class PaymentsController < ApplicationController
       (check_out_date >= season.first && check_out_date <= season.last)
     end
 
-    price_per_night = is_peak_season ? 88000.00 : 1.00 # 繁忙期料金と通常料金を設定
+    price_per_night = is_peak_season ? 88000.00 : 55000.00 # 繁忙期料金と通常料金を設定
     total_price = num_days * price_per_night
     total_price
   end
