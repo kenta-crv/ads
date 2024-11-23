@@ -73,3 +73,52 @@ document.addEventListener('DOMContentLoaded', function() {
   checkInInput.addEventListener('change', updatePrice);
   checkOutInput.addEventListener('change', updatePrice);
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const swiper = new Swiper('.swiper-container', {
+    loop: true,
+    autoplay: {
+      delay: 3000,
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next', // 次への矢印
+      prevEl: '.swiper-button-prev', // 前への矢印
+    },
+  });
+
+  // FancyBoxの初期化
+  Fancybox.bind("[data-fancybox='gallery']", {
+    Image: {
+      fit: "contain",
+    },
+  });
+});
+
+const swiper = new Swiper('.slider', {
+  loop: true,
+  autoplay: {
+    delay: 3000,
+  },
+  pagination: {
+    el: '.swiper-pagination',
+    clickable: true,
+  },
+  breakpoints: {
+    640: { // スマホ向け
+      slidesPerView: 1,
+      spaceBetween: 10,
+    },
+    768: { // タブレット向け
+      slidesPerView: 2,
+      spaceBetween: 20,
+    },
+    1024: { // デスクトップ向け
+      slidesPerView: 3,
+      spaceBetween: 30,
+    },
+  },
+});

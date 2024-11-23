@@ -1266,10 +1266,37 @@ table.list {
      }
 
 }
-
-
-.set-devise {
-  padding-top:20px;
-  padding-right:35px;
+/* Swiperの画像サイズをPC用に調整 */
+.section .swiper-container .swiper-wrapper .swiper-slide img {
+  width: 80% !important; /* PC用画像幅 */
+  height: auto !important;
+  margin: 0 auto !important;
+  display: block;
 }
 
+/* タブレット (768px以下) */
+@media (max-width: 768px) {
+  .section .swiper-container .swiper-wrapper .swiper-slide img {
+    width: 75% !important; /* タブレット用画像幅 */
+  }
+}
+
+/* スマホ (480px以下) */
+@media (max-width: 480px) {
+  .section .swiper-container .swiper-wrapper .swiper-slide img {
+    width: 100% !important; /* スマホ用画像幅 */
+  }
+}
+
+/* Swiperコンテナ全体の調整 */
+.swiper-container {
+  max-width: 1200px; /* 最大幅 */
+  margin: 0 auto;    /* 中央揃え */
+}
+
+.swiper-slide {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

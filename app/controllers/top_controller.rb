@@ -3,6 +3,12 @@ class TopController < ApplicationController
   def index
   end
 
-  def appointer
+  def lp
+  end
+
+  def cancalpolicy
+  end
+
+  def privacy
   end
 end
