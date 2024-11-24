@@ -74,7 +74,7 @@ gem 'annotate'
 gem "jquery-rails"
 #ページネート
 gem 'kaminari'
-gem 'annotate'
+
 gem 'will_paginate'
 #gem 'bootstrap-will_paginate'
 #リッチエディタ
@@ -94,6 +94,6 @@ gem 'kaminari-bootstrap', '~> 3.0.1'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'flatpickr'
 
-gem 'stripe'
-gem 'image_processing'
-gem 'mini_magick'
+# SQUARE
+gem 'square.rb'
+
