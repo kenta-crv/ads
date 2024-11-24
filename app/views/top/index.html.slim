@@ -1,38 +1,73 @@
 - set_meta_tags  title: '渋谷駅まで電車で2分！東京屈指の人気街【恵比寿】マンスリーマンション'
 - set_meta_tags  description: '渋谷駅まで電車で2分！東京屈指の人気街【恵比寿】マンスリーマンション'
+.section
+  .swiper-container
+    .swiper-wrapper
+      / 一枚目の画像を固定
+      .swiper-slide
+        = link_to asset_path("interior/base.jpeg"), data: { fancybox: "gallery" } do
+          = image_tag asset_path("interior/base.jpeg"), loading: "lazy", alt: "Image 1"
+
+      / interiorディレクトリ内の画像を動的に取得
+      - interior_images = Dir.glob(Rails.root.join("app/assets/images/interior/*")).map { |path| File.basename(path) }
+      - interior_images.each_with_index do |image, index|
+        .swiper-slide
+          = link_to asset_path("interior/#{image}"), data: { fancybox: "gallery" } do
+            = image_tag asset_path("interior/#{image}"), loading: "lazy", alt: "Image #{index + 2}"
+
+  .div-slider-thumbnails
+    / 一枚目のサムネイル
+    = link_to asset_path("interior/base.jpeg"), data: { fancybox: "gallery" } do
+      = image_tag asset_path("interior/base.jpeg"), class: "thumbnail", loading: "lazy", alt: "Thumbnail 1"
+
+    / interiorディレクトリ内の画像をサムネイルとして取得
+    - interior_images.each_with_index do |image, index|
+      = link_to asset_path("interior/#{image}"), data: { fancybox: "gallery" } do
+        = image_tag asset_path("interior/#{image}"), class: "thumbnail", loading: "lazy", alt: "Thumbnail #{index + 2}"
+
+  / 矢印ナビゲーション
+  .swiper-button-prev
+  .swiper-button-next
+
+  / ページネーション
+  .swiper-pagination
 
 
-.back-image-index.back-image-top
-  .row
-    .col-sm-6
-       = image_tag "base.webp", class: "pc-image", alt:"自動販売機を設置するなら『自動販売機ねっと』。自動販売機ねっとなら、キリン自動販売機・アサヒ自動販売機・サントリー自動販売機・大塚自動販売機・コカコーラ自動販売機・ダイドー自動販売機・伊藤園自動販売機・ネオス自動販売機から最適な条件の自動販売機の設置を一元サポートします。"
-       = image_tag "base.webp", class: "mobile-image", alt:"自動販売機を設置するなら『自動販売機ねっと』。自動販売機ねっとなら、キリン自動販売機・アサヒ自動販売機・サントリー自動販売機・大塚自動販売機・コカコーラ自動販売機・ダイドー自動販売機・伊藤園自動販売機・ネオス自動販売機から最適な条件の自動販売機の設置を一元サポートします。"
-    .col-sm-6
-        h1.index-3
-         | 恵比寿駅！徒歩７分の好立地！
-         br
-         | 高級マンションで快適民泊！
-         br
-         .blue
-          | 『本サイト限定募集中』
-        =link_to '/estimates/new' do
-         =image_tag 'click3.webp', width: '100%', class: 'center', alt:"自動販売機の一括見積もり『自動販売機ねっと』をご利用ならこちらをクリック。簡単60秒で無料で自動販売機を一括比較見積もり"
-
-br
 hr.line
-br
-
 /# push font
 h2.push
    span
-     | 本サイト限定募集！恵比寿で人気の
+     | 利便性抜群の恵比寿徒歩7分！
      br
-     | 高級マンションで快適民泊！
-br
+     | ラグジュアリー高級マンション宿泊
 hr.line
 br
 
+.row
+  .col-sm-12.push
+   span
+     | \ 本サイト限定申し込み受付!! /
+   = link_to "/estimates/new" do
+     =image_tag 'click3.webp', width: '70%', class: 'center', alt:"自動販売機の一括見積もり『自動販売機ねっと』をご利用ならこちらをクリック。簡単60秒で無料で自動販売機を一括比較見積もり"
+hr.line
+br
+.top-wrapper
+  h2.heading
+   strong
+    | 料金シミュレーション
+.row
+ .col-sm-4
+   | チェックイン日
+   = text_field_tag :check_in_date, nil, class: 'flatpickr', data: { target: 'flatpickr' }
+ .col-sm-4
+   | チェックアウト日
+   = text_field_tag :check_out_date, nil, class: 'flatpickr', data: { target: 'flatpickr' }
+ .col-sm-4
+   #price-display
 
+br
+hr.line
+br
 
 
 /# USP Point
@@ -42,19 +77,15 @@ br
     strong
      | 『概要』
   br
-  br
   h6.heading
     | 恵比寿から徒歩７分にある好立地マンション。民泊でよくある築年数の古いマンションではなく、ハイグレードマンションとなります。
-  br
   .row.center
     .col-sm-5
       br/
       =image_tag 'second.webp', width:"100%", class: 'center',alt:"問い合わせから設置までスピーディーに済ませたい。自販機を設置したいが、各メーカーに問い合わせするのが手間だなと感じる。自販機の相見積もりを簡単に取得したい。過去に現地調査で落ちてしまって困っている。自販機を交換したいが、対応してくれる自販機メーカーを探して欲しい"
     .col-sm-7.left
+     br/
      table.list.responsive-table.center
-      colgroup
-        col[width="30%"]
-        col[width="70%"]
       tr
        th.company-cell 立地
        td.responsive-cel.red 恵比寿駅徒歩７分
@@ -192,11 +223,47 @@ br/
 .top-wrapper
   h2.heading
     strong
+      | 設備・付属について
+  br/
+  br/
+  table.list.responsive-table.center
+      tr
+       th.company-cell 設備
+       td.responsive-cel
+        | 鉄筋コンクリート造/築5年以内/オートロック/エレベータ/バルコニー/バストイレ/室内洗濯機置場/バス有/浴室乾燥機/給湯追い焚き有/IHコンロ有/TV/エアコン/乾燥機付き洗濯機/冷蔵庫/セミダブルベッド/恵比寿駅10分以内/Wi-Fi
+
+      tr
+       th.company-cell アメニティ
+       td.responsive-cel
+        | シャンプー/リンス/ボディソープ/ティッシュペーパー（2箱）/トイレットペーパー（5個）/歯ブラシ（2本）/バスタオル/タオル/掃除用品一式/フライパン/カトラリー一式/その他調理備品各種/一部調味料/
+
+br
+hr.line
+br
+br
+br
+
+.row
+  .col-sm-12.push
+   span
+     | \ カンタン60秒入力! /
+   = link_to "/estimates/new" do
+     =image_tag 'click3.webp', width: '70%', class: 'center', alt:"自動販売機の一括見積もり『自動販売機ねっと』をご利用ならこちらをクリック。簡単60秒で無料で自動販売機を一括比較見積もり"
+
+br
+hr.line
+br
+br
+
+
+.top-wrapper
+  h2.heading
+    strong
       | ご利用レビューのご紹介
   br/
   br/
   .row.center
-    .col-sm-12
+    .col-sm-12.review-image
       =image_tag 'review.webp', width:"60%", class: 'center'
 br
 hr.line

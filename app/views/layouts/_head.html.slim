@@ -8,6 +8,14 @@ link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpick
 / flatpickrのJavaScript
 script src="https://cdn.jsdelivr.net/npm/flatpickr"
 
+/ FancyBox のスタイルシートとスクリプト
+link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css"
+script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"
+
+/ Swiper のスタイルシートとスクリプト
+link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"
+script src="https://unpkg.com/swiper/swiper-bundle.min.js"
+
 
 = csrf_meta_tags
 = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
@@ -16,13 +24,7 @@ script[src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"]
 = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
 
+
 = display_meta_tags(default_meta_tags)
 = favicon_link_tag('favicon.ico')
-script[async src="https://www.googletagmanager.com/gtag/js?id=UA-232469503-1"]
 
-script
-  |  window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-232469503-1');
-
-script[async src="https://www.googletagmanager.com/gtag/js?id=AW-10998015402"]
-script
-  | window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-10998015402');
