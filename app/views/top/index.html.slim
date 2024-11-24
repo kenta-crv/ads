@@ -17,8 +17,8 @@
 
   .div-slider-thumbnails
     / 一枚目のサムネイル
-    = link_to asset_path("base.webp"), data: { fancybox: "gallery" } do
-      = image_tag asset_path("base.webp"), class: "thumbnail", loading: "lazy", alt: "Thumbnail 1"
+    = link_to asset_path("interior/base.jpeg"), data: { fancybox: "gallery" } do
+      = image_tag asset_path("interior/base.jpeg"), class: "thumbnail", loading: "lazy", alt: "Thumbnail 1"
 
     / interiorディレクトリ内の画像をサムネイルとして取得
     - interior_images.each_with_index do |image, index|

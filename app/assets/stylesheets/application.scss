@@ -1303,6 +1303,45 @@ table.list td.responsive-cel.red {
   }
 }
 
+/* Swiperの画像サイズを調整 */
+.section .swiper-container .swiper-wrapper .swiper-slide img {
+  max-width: 100%; /* 画像が画面幅を超えないように調整 */
+  height: auto; /* 高さを自動調整 */
+  margin: 0 auto;
+  display: block;
+}
+
+/* FancyBoxのリンクがクリック時にスクロールしないよう調整 */
+a[data-fancybox="gallery"] {
+  display: inline-block; /* リンクの周囲に余白を適切に保持 */
+  text-decoration: none; /* デフォルトのリンクスタイルを削除 */
+}
+
+a[data-fancybox="gallery"]:focus {
+  outline: none; /* フォーカス時の枠線を削除 */
+}
+
+/* FancyBoxのコンテナでスクロールを防止 */
+.fancybox__container {
+  overflow: hidden; /* 不要なスクロールを防止 */
+  touch-action: manipulation; /* スマホでのタッチ操作を適切に処理 */
+}
+
+/* FancyBox内の画像調整 */
+.fancybox__image {
+  max-width: 100%; /* 画像が画面幅にフィット */
+  height: auto; /* 比率を保つ */
+  display: block;
+  margin: auto; /* 中央揃え */
+}
+
+/* リンククリック時の余分な動きを防ぐ */
+html, body {
+  scroll-behavior: smooth; /* なめらかなスクロールで視覚的な違和感を軽減 */
+  overflow-x: hidden; /* 横スクロールを防止 */
+}
+
+
 /* Swiperコンテナ全体の調整 */
 .swiper-container {
   max-width: 1200px; /* 最大幅 */
