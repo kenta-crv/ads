@@ -56,11 +56,11 @@ class PaymentsController < ApplicationController
   end
 
   def thanks
-    # 支払い完了後のサンキューページ
+    # 支払い成功時の処理
   end
 
   def cancel
-    # キャンセルページ
+    # 支払いキャンセル時の処理
   end
 
   private
