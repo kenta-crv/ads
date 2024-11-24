@@ -2,25 +2,6 @@
 - set_meta_tags  description: '渋谷駅まで電車で2分！東京屈指の人気街【恵比寿】マンスリーマンション'
 
 
-.section
-  .swiper-container
-    .swiper-wrapper
-      .swiper-slide
-        = link_to asset_path("base.webp"), data: { fancybox: "gallery" } do
-          = image_tag asset_path("base.webp"), loading: "lazy", alt: "Image 1"
-      .swiper-slide
-        = link_to asset_path("base.webp"), data: { fancybox: "gallery" } do
-          = image_tag asset_path("base.webp"), loading: "lazy", alt: "Image 2"
-      .swiper-slide
-        = link_to asset_path("base.webp"), data: { fancybox: "gallery" } do
-          = image_tag asset_path("base.webp"), loading: "lazy", alt: "Image 3"
-
-    / 矢印ナビゲーション
-    .swiper-button-prev
-    .swiper-button-next
-
-  .swiper-pagination
-
 .back-image-index.back-image-top
   .row
     .col-sm-6
@@ -206,6 +187,42 @@ br
 br
 hr.line
 br/
+
+
+.top-wrapper
+  h2.heading
+    strong
+      | 設備・付属について
+  br/
+  br/
+  table.list.responsive-table.center
+      tr
+       th.company-cell 設備
+       td.responsive-cel
+        | 鉄筋コンクリート造/築5年以内/オートロック/エレベータ/バルコニー/バストイレ/室内洗濯機置場/バス有/浴室乾燥機/給湯追い焚き有/IHコンロ有/TV/エアコン/乾燥機付き洗濯機/冷蔵庫/セミダブルベッド/恵比寿駅10分以内/Wi-Fi
+
+      tr
+       th.company-cell アメニティ
+       td.responsive-cel
+        | シャンプー/リンス/ボディソープ/ティッシュペーパー（2箱）/トイレットペーパー（5個）/歯ブラシ（2本）/バスタオル/タオル/掃除用品一式/フライパン/カトラリー一式/その他調理備品各種/一部調味料/
+
+br
+hr.line
+br
+br
+br
+
+.row
+  .col-sm-12.push
+   span
+     | \ カンタン60秒入力! /
+   = link_to "/estimates/new" do
+     =image_tag 'click3.webp', width: '70%', class: 'center', alt:"自動販売機の一括見積もり『自動販売機ねっと』をご利用ならこちらをクリック。簡単60秒で無料で自動販売機を一括比較見積もり"
+
+br
+hr.line
+br
+br
 
 
 .top-wrapper

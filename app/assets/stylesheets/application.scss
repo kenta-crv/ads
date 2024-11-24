@@ -407,6 +407,12 @@ textarea {
            text-align:center;
            color: #666;
             }
+            @media (max-width: 768px) {
+              .heading {
+                font-size: 1.6rem; /* 少し小さく */
+              }
+            }
+            
         h2 {
             font-size:3vw;
             font-weight:bold;
@@ -1239,33 +1245,42 @@ dd {
 
 }
 
-
-/*テーブル共通*/
 table.list {
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
   border-collapse: separate;
-  border-spacing: 0px 5px;
-  font-size: 1.0vw;
-
-  th { padding: 10px; }
-  td { padding: 8px; }
-
-  th {
-     background: $main_color;
-     vertical-align: middle;
-     text-align: left;
-     overflow: visible;
-     position: relative;
-     color: #fff;
-     font-weight: normal;
-     font-size: 1.0vw;
-     }
-  td {
-     background: #f4f4f4;
-     }
-
+  border-spacing: 5px; /* セル間の余白 */
+  font-size: 16px;
 }
+
+table.list th, table.list td {
+  padding: 10px; /* セル内の余白 */
+  font-size: inherit; /* テーブル全体のサイズに従う */
+}
+
+table.list th {
+  background: #007bff; /* メインカラー */
+  color: #fff;
+  text-align: left;
+  font-weight: normal;
+}
+
+table.list td {
+  background: #f4f4f4;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+table.list th.company-cell {
+  width: 30%;
+}
+
+table.list td.responsive-cel.red {
+  width: 70%;
+  color: #d9534f; /* 赤文字 */
+}
+
+
 /* Swiperの画像サイズをPC用に調整 */
 .section .swiper-container .swiper-wrapper .swiper-slide img {
   width: 80% !important; /* PC用画像幅 */
@@ -1299,4 +1314,59 @@ table.list {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  top: 33%; /* スライダーの縦方向の中心 */
+  transform: translateY(-50%); /* 自身の高さの半分だけ上に移動して完全に中央揃え */
+  z-index: 10; /* 他の要素よりも前に表示されるようにする */
+}
+
+.div-slider-thumbnails {
+  display: flex; /* 横並びにする */
+  justify-content: center; /* 中央揃え */
+  margin-top: 20px; /* スライダーとの間隔 */
+}
+
+.div-slider-thumbnails .thumbnail {
+  width: 80%; /* サムネイルの幅を設定 */
+  height: auto; /* 比率を保つ */
+  margin: 0 10px; /* 画像間の余白 */
+  cursor: pointer; /* カーソルをポインタに変更 */
+  transition: transform 0.3s; /* ホバーアニメーション */
+}
+
+.div-slider-thumbnails .thumbnail:hover {
+  transform: scale(1.1); /* ホバー時に拡大 */
+}
+
+#price-display {
+  color:red;
+  font-size:140%;
+  font-weight:bold;;
+}
+
+/* レスポンシブ対応: スマホサイズで幅を100%に */
+@media (max-width: 768px) {
+  .review-image img {
+    width: 100%; /* 幅を100%に拡大 */
+  }
+}
+
+/* スマホ向けスタイル */
+@media (max-width: 767px) {
+  /* 「要望・備考」の文字サイズを大きく */
+  .arrow-box-cell {
+    font-size: 18px; /* 文字をスマホ時に拡大 */
+  }
+
+  /* 備考フォームの見やすさ向上 */
+  .input-container textarea {
+    font-size: 18px; /* フォーム内の文字を大きく */
+    padding: 14px; /* 内側のスペースを確保 */
+    height: 150px; /* 高さを十分に確保 */
+    border: 3px solid #ccc; /* 縁をさらに太く設定 */
+    border-radius: 8px; /* 見た目を少し柔らかく */
+  }
 }
