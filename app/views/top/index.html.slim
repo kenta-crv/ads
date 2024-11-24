@@ -5,8 +5,8 @@
     .swiper-wrapper
       / 一枚目の画像を固定
       .swiper-slide
-        = link_to asset_path("base.webp"), data: { fancybox: "gallery" } do
-          = image_tag asset_path("base.webp"), loading: "lazy", alt: "Image 1"
+        = link_to asset_path("interior/base.jpeg"), data: { fancybox: "gallery" } do
+          = image_tag asset_path("interior/base.jpeg"), loading: "lazy", alt: "Image 1"
 
       / interiorディレクトリ内の画像を動的に取得
       - interior_images = Dir.glob(Rails.root.join("app/assets/images/interior/*")).map { |path| File.basename(path) }
