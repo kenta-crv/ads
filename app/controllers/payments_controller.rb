@@ -6,7 +6,6 @@ class PaymentsController < ApplicationController
   before_action :set_estimate, only: [:checkout]
 
   def checkout
-
     if @estimate.nil?
       Rails.logger.info("対象の見積もりが存在しません。")
       redirect_to cancel_url
@@ -15,9 +14,17 @@ class PaymentsController < ApplicationController
 
     check_in_date = @estimate.check_in_date
     check_out_date = @estimate.check_out_date
-  
-    num_days = (check_out_date - check_in_date).to_i
-    total_price = calculate_total_price(check_in_date, check_out_date, num_days)
+
+    # サービスで料金計算を行う
+    result = PriceCalculator.calculate_total_price(check_in_date, check_out_date)
+
+    if result[:error]
+      flash[:error] = result[:error]
+      redirect_to cancel_url
+      return
+    end
+
+    total_price = result[:total_price]
 
     # Square APIを使用してCheckoutを作成
     client = Square::Client.new(
@@ -41,7 +48,7 @@ class PaymentsController < ApplicationController
         }
       }
     )
-  
+
     if result.success?
       # 生成されたリンクを取得
       payment_link = result.data[:payment_link][:url]
@@ -52,7 +59,6 @@ class PaymentsController < ApplicationController
       Rails.logger.error("決済に失敗しました。: #{result.errors}, Estimate ID: #{@estimate.id}")
       redirect_to cancel_url
     end
-
   end
 
   def thanks

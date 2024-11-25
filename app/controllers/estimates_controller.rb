@@ -15,7 +15,7 @@ class EstimatesController < ApplicationController
       # 宿泊日数と料金計算
       check_in_date = @estimate.check_in_date
       check_out_date = @estimate.check_out_date
-      
+    
       if check_in_date.nil? || check_out_date.nil?
         flash[:error] = "チェックイン日またはチェックアウト日が入力されていません。"
         render :new and return
@@ -23,10 +23,19 @@ class EstimatesController < ApplicationController
     
       num_days = (check_out_date - check_in_date).to_i
     
-      # 合計金額計算
-      @normal_price_per_night = 55000.00
-      @peak_price_per_night = 88000.00
-      @num_normal_days, @num_peak_days, @total_price = calculate_total_price(check_in_date, check_out_date, num_days)
+      if num_days < 5
+        flash[:error] = "宿泊日数は最低5泊以上必要です。"
+        render :new and return
+      end
+    
+      # サービスで料金計算を行う
+      result = PriceCalculator.calculate_total_price(check_in_date, check_out_date)
+    
+      @normal_price_per_night = PriceCalculator::NORMAL_PRICE_PER_NIGHT
+      @peak_price_per_night = PriceCalculator::PEAK_PRICE_PER_NIGHT
+      @num_normal_days = result[:normal_days]
+      @num_peak_days = result[:peak_days]
+      @total_price = result[:total_price]
     
       add_breadcrumb "入力内容確認"
       if @estimate.valid?
@@ -35,6 +44,7 @@ class EstimatesController < ApplicationController
         render :action => 'new'
       end
     end
+    
     
     def calculate_total_price(check_in_date, check_out_date, num_days)
       num_normal_days = 0
