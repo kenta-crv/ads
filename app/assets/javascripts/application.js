@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const checkInDate = new Date(checkInInput.value);
       const checkOutDate = new Date(checkOutInput.value);
 
-      let pricePerNight = checkPeakSeason(checkInDate) || checkPeakSeason(checkOutDate) ? 70000 : 55000;
+      let pricePerNight = checkPeakSeason(checkInDate) || checkPeakSeason(checkOutDate) ? 55000 : 39500;
       let numDays = (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24);
 
       if (!isNaN(numDays) && numDays > 0) {

@@ -92,7 +92,7 @@ class PaymentsController < ApplicationController
       (check_out_date >= season.first && check_out_date <= season.last)
     end
 
-    price_per_night = is_peak_season ? 88000.00 : 55000.00 # 繁忙期料金と通常料金を設定
+    price_per_night = is_peak_season ? 55000.00 : 39500.00 # 繁忙期料金と通常料金を設定
     total_price = num_days * price_per_night
     total_price
   end
