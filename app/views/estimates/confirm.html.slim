@@ -1,6 +1,4 @@
 = form_for @estimate, url: thanks_estimates_path(@estimate) do |f|
-  br
-  br
   .tops-wrapper
     h2.headline
       | 確認フォーム
@@ -72,7 +70,8 @@
             | お支払い金額
         td.responsive-cell
           span(style="color: red; font-weight: bold;")
-            | ¥#{@total_price.to_s} (¥#{@normal_price_per_night} × #{@num_normal_days} + ¥#{@peak_price_per_night} × #{@num_peak_days})
+            | #{@total_price.to_s(:delimited)} 
+            | 円
       tr
         td.label-cell
           strong.label.label-blue 任意

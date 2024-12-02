@@ -35,9 +35,7 @@ class EstimatesController < ApplicationController
       @peak_price_per_night = PriceCalculator::PEAK_PRICE_PER_NIGHT
       @num_normal_days = result[:normal_days]
       @num_peak_days = result[:peak_days]
-      @total_price = result[:total_price]
-    
-      add_breadcrumb "入力内容確認"
+      @total_price = result[:total_price].to_i
       if @estimate.valid?
         render :action => 'confirm'
       else

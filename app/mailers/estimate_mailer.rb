@@ -3,7 +3,7 @@ class EstimateMailer < ActionMailer::Base
   def received_email(estimate)
     @estimate = estimate
     mail to: "info@ebisu-hotel.tokyo"
-    mail(subject: 'サービス賃貸') do |format|
+    mail(subject: '恵比寿レントサービス') do |format|
       format.text
     end
   end
@@ -11,7 +11,7 @@ class EstimateMailer < ActionMailer::Base
   def send_email(estimate)
     @estimate = estimate
     mail to: estimate.email
-    mail(subject: 'お問い合わせありがとうございました。') do |format|
+    mail(subject: 'お申し込みいただきありがとうございました。') do |format|
       format.text
     end
   end
