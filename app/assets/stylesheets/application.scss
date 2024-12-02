@@ -270,32 +270,120 @@ table.company {
    width:45%;
  }
 }
+/* 共通のデザイン */
+table.company {
+  width: 90%;
+  margin: 0 auto;
+  border-collapse: separate;
+  border-spacing: 0px 15px;
+  font-size: 1.5vw;
 
+  th, td {
+    padding: 10px;
+  }
 
+  th {
+    background: $main_color;
+    vertical-align: middle;
+    text-align: left;
+    overflow: visible;
+    position: relative;
+    color: #fff;
+    font-weight: normal;
+    font-size: 1.7vw;
 
-/* firefox */
+    :after {
+      left: 100%;
+      top: 50%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-color: rgba(136, 183, 213, 0);
+      border-left-color: $main_color;
+      border-width: 10px;
+      margin-top: -10px;
+    }
+  }
+
+  td {
+    background: #f4f4f4;
+  }
+
+  input, textarea {
+    width: 90%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+}
+
+/* Firefoxの調整 */
 @-moz-document url-prefix() {
   table.company th::after {
-     float: right;
-     padding: 0;
-     left: 30px;
-     top: 10px;
-     content: " ";
-     height: 0;
-     width: 0;
-     position: relative;
-     pointer-events: none;
-     border: 10px solid transparent;
-     border-left: $main_color 10px solid;
-     margin-top: -10px;
-     }
+    float: right;
+    padding: 0;
+    left: 30px;
+    top: 10px;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: relative;
+    pointer-events: none;
+    border: 10px solid transparent;
+    border-left: $main_color 10px solid;
+    margin-top: -10px;
+  }
 }
-input {
-  width:90%;
-}
-textarea {
-  width:90%;
-  line-height: 1.5em;
+
+/* レスポンシブデザイン (モバイル適用) */
+@media screen and (max-width: 768px) {
+  table.company {
+    width: 100%;
+    font-size: 1rem;
+    border-spacing: 10px;
+  }
+
+  td.arrow-box-cell {
+    display: block;
+    text-align: left;
+    font-weight: bold;
+  }
+
+  td.responsive-cell {
+    display: block;
+    width: 100%;
+  }
+
+  .input-container {
+    width: 100%;
+  }
+
+  input, textarea {
+    width: 95%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
+  button.btn-primary {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  button.btn-primary:hover {
+    background-color: #0056b3;
+  }
 }
 
 
