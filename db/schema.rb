@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_08_28_175707) do
+ActiveRecord::Schema.define(version: 2024_12_02_071434) do
 
   create_table "admins", force: :cascade do |t|
     t.string "user_name", default: "", null: false
@@ -64,6 +64,24 @@ ActiveRecord::Schema.define(version: 2024_08_28_175707) do
     t.datetime "updated_at", null: false
     t.index ["client_id"], name: "index_comments_on_client_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.string "name"
+    t.string "tel"
+    t.string "email"
+    t.string "messages"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "contracts", force: :cascade do |t|
+    t.string "name"
+    t.string "tel"
+    t.string "email"
+    t.string "messages"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "estimates", force: :cascade do |t|

@@ -5,16 +5,17 @@ html
   header
       .row
         .col-xs-2
-           = link_to "/"
             /=image_tag "rogo.webp", width: "220px", class:"header-image", alt:"株式会社Ri-Plus『アポ匠ロゴ』"
-        .col-xs-8
-        .col-xs-2.set-devise
+        .col-xs-6
+        .col-xs-4
       .row.navi
-       .col-xs-12.center
+       .col-xs-8.center
            p.notice
             = notice
            p.alert
             = alert
+       .col-xs-4
+           = link_to "お問い合わせ", "/contacts/new", class:"btn btn-default"
   body
     main
       .bread

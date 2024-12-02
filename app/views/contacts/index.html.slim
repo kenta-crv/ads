@@ -1,0 +1,36 @@
+- set_meta_tags  title: ''
+- set_meta_tags  description: ''
+
+
+.row
+  br
+  br
+  table.list
+   tr
+     th 会社名
+     th 担当者
+     th 電話番号
+     th メールアドレス
+     th 導入希望
+     th 問い合わせ日
+     th ステータス
+     th 次回営業日
+     th 最新更新日
+     th 削除
+   - @contacts.each do |contact|
+    - latest_comment = contact.comments.order(created_at: :desc).first
+    tr
+     td = link_to contact.co, contact_path(contact), clsss:"store"
+     td = contact.person_first
+     td = contact.tel
+     td = contact.email
+     td = contact.period
+     td = contact.created_at.strftime("%Y年%m月%d日%H時")
+     td = latest_comment&.status
+     td = latest_comment&.next
+     td = latest_comment&.created_at&.strftime("%Y年%m月%d日%H時")
+     td = link_to '削除', contact_path(contact), method: :delete, data: { confirm: '本当に削除しますか?' }, class:"btn btn-danger"
+  br
+    hr.line
+    br
+    = paginate(@contacts)

@@ -1,0 +1,231 @@
+- set_meta_tags noindex: true
+.tops-wrapper
+ h2.headline  基本情報
+ table.company
+       colgroup
+         col width="10%"
+         col width="20%"
+         col width="70%"
+       tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
+          | 会社名
+        td.responsive-cell
+         .input-container
+          = @contact.co
+       tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
+          | ご担当者様名
+        td.responsive-cell
+         .input-container
+          = @contact.person_first
+          = @contact.person_last
+       tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
+          | 電話番号
+        td.responsive-cell
+         .input-container
+          = @contact.tel
+       tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
+          | 所在地
+        td.responsive-cell
+         .input-container
+          = @contact.address
+       tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
+          | メールアドレス
+        td.responsive-cell
+         .input-container
+          = @contact.email
+       tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
+          | 採用したい職種
+        td.responsive-cell
+         .input-container
+          = @contact.work
+       tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
+          | 採用したい人数
+        td.responsive-cell
+         .input-container
+          = @contact.number
+       tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
+          | 発注予定時期
+        td.responsive-cell
+         .input-container
+          = @contact.period
+       tr
+        td.label-cell
+          strong.label.label-blue 任意
+        td.arrow-box-cell
+          | 備考・要望
+        td.responsive-cell
+         .input-container
+          = @contact.remarks
+       tr
+        td
+          strong.label 必須
+        td
+          |代表者名
+        td
+          = @contact.president_first
+          = @contact.president_last
+       tr
+        td
+          strong.label 必須
+        td
+          |代表者役職
+        td
+          = @contact.post_title
+       tr
+        td
+          strong.label 必須
+        td
+          |採用ページURL
+        td
+          = @contact.recruit_url
+       tr
+        td
+          strong.label 必須
+        td
+          |採用ページURL2
+        td
+          = @contact.recruit_url_2
+       tr
+        td
+          strong.label 必須
+        td
+          |契約の同意
+        td
+          = @contact.agree
+       tr
+        td
+          strong.label 必須
+        td
+          |契約日
+        td
+         - if @contact.contact_date.present?
+           - contact_date = Date.parse(@contact.contact_date)
+           = contact_date.strftime("%Y年%m月%d日")
+       tr
+         td
+           strong.label 必須
+         td
+           |成果報酬単価
+         td
+           = @contact.unit_price
+       tr
+         td
+           strong.label 必須
+         td
+           |返戻金条件
+         td
+           = @contact.refund
+       tr
+         td
+           strong.label 必須
+         td
+           |支払日
+         td
+           = @contact.payment
+
+       - if admin_signed_in?
+        tr
+         td
+           strong.label 必須
+         td
+           |給与
+         td
+           = @contact.salary
+        tr
+         td
+           strong.label 必須
+         td
+           |採用条件
+         td
+           = @contact.employment_conditions
+        tr
+         td
+           strong.label 必須
+         td
+           |書類選考期間
+         td
+           = @contact.document_screening
+        tr
+         td
+           strong.label 必須
+         td
+           |採用率
+         td
+           = @contact.conversion
+
+
+.actions_container style="text-align: center; margin-bottom: 30px;"
+  = link_to "契約へ進む", info_contact_path(@contact), class: "btn btn-primary"
+  - if admin_signed_in?
+   = link_to "削除する", contact_path(@contact), class: "btn btn-danger", method: :delete, data: { confirm: '本当に削除しますか？' }, style: "margin-left: 10px;"
+   = link_to "一覧に戻る", contacts_path, class: "btn btn-default"
+
+- if admin_signed_in?
+ = form_for [@contact, @contact.comments.build] do |f|
+  table.company[width="100%"]
+    col[width="25%"]
+    col[width="25%"]
+    col[width="25%"]
+    tbody
+      tr
+          th
+            | ステータス
+          th
+            | 次回営業日
+          th
+            | コメント
+
+      tr
+          td
+            = f.select(:status, [\
+            ["商談","商談"],\
+            ["見込低","見込低"],\
+            ["見込中","見込中"],\
+            ["見込高","見込高"],\
+            ["契約","契約"],\
+            ["NG","NG"]],include_blank: "選択してください")     
+          td
+            = f.datetime_field :next
+          td
+            = f.text_area :body
+      tr
+        th[colspan="3"]
+         .center
+          = f.submit "登録する", class:"btn btn-primary"
+ small 商談ステータスを入れる場合は商談日を入力。　不在の場合、ステータスは以前のステータスにし、不在にチェックを入れる
+ table.company[width="100%"]
+  - if @contact.comments.any?
+    tbody
+     - @contact.comments.each do |comment|
+       tr
+        td
+          = comment.status
+        td
+          = comment.next
+        td
+          = comment.body
+        td
+          = link_to "編集", edit_contact_comments_path(@contact, comment), _blank: "target"

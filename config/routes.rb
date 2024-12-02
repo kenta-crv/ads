@@ -11,64 +11,6 @@ Rails.application.routes.draw do
   }
   resources :admins, only: [:show]
 
-  # クライアントアカウント
-  devise_for :clients, controllers: {
-    registrations: 'clients/registrations',
-    sessions: 'clients/sessions'
-  }
-  resources :clients do
-    resources :offers do
-      member do
-        get 'confirm'
-        post 'thanks'
-      end
-    end
-    resource :comments
-    collection do
-      post :confirm
-      post :thanks
-    end
-    member do
-      post :send_mail
-      post :send_mail_start
-      get "info"
-      get "conclusion"
-      get "payment"
-      get "calendar"
-      get "start"
-    end
-  end
-
-  # ユーザーアカウントとワーカーリソース
-  devise_for :users, controllers: {
-    registrations: 'users/registrations',
-    sessions: 'users/sessions'
-  }
-  resources :users do
-    resources :offers do
-      member do
-        get 'confirm'
-        post 'thanks'
-      end
-    end
-    resource :comments
-    collection do
-      post :confirm
-      post :thanks
-    end
-    member do
-      post :send_mail
-      post :send_mail_start
-      get "info"
-      get "conclusion"
-      get "payment"
-      get "calendar"
-      get "start"
-      post 'offer_email', to: 'workers#offer_email', as: 'offer_email'
-      post 'reject_email', to: 'workers#reject_email', as: 'reject_email'
-   end
-  end
-
   # Square（決済）
   post 'checkout', to: 'payments#checkout'
   get 'success', to: 'payments#success'
@@ -81,6 +23,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :offers, only: [:index, :show]
+  resources :contacts do
+    collection do
+      post :confirm
+      post :thanks
+    end
+  end
 
 end
