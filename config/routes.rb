@@ -23,7 +23,8 @@ Rails.application.routes.draw do
   resources :estimates do
     collection do
       post :confirm
-      get :thanks
+      post :thanks  # フォーム送信時のPOSTを維持
+      get :thanks   # Google広告や直接アクセス用のGETを追加
     end
   end
 
