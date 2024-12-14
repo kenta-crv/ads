@@ -35,14 +35,21 @@ class EstimatesController < ApplicationController
         render :new
       end
     end
-      
-    def thanks
-      @estimate = Estimate.new(estimate_params)
-      @estimate.save
-      EstimateMailer.received_email(@estimate).deliver # 管理者に通知
-      EstimateMailer.send_email(@estimate).deliver # 送信者に通知
-    end
 
+    def thanks
+      if params[:estimate] # パラメータがある場合
+        @estimate = Estimate.new(estimate_params)
+        if @estimate.save
+          # メールを送信
+          EstimateMailer.received_email(@estimate).deliver
+          EstimateMailer.send_email(@estimate).deliver
+        end
+      else
+        # パラメータがない場合はダミーデータで対応
+        @estimate = Estimate.new(name: "ゲスト", tel: "未提供", email: "未提供")
+      end
+    end
+    
     def create
       @estimate = Estimate.new(estimate_params)
       @estimate.save
