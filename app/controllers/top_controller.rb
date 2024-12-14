@@ -1,17 +1,15 @@
 class TopController < ApplicationController
-
+  before_action :redirect_based_on_device, only: [:index, :lp, :index_en, :lp_en]
   def index
-    if pc_device?
-      redirect_to lp_path
-    else
-      # スマホの場合はそのまま index を表示
-      render :index
-    end
   end
 
   def lp
-    # PC専用のランディングページ表示処理
-    render :lp
+  end
+
+  def index_en
+  end
+
+  def lp_en
   end
 
   def calculate_price
@@ -31,5 +29,25 @@ class TopController < ApplicationController
   end
 
   def privacy
+  end
+  private
+
+  # デバイスに応じてリダイレクトする
+  def redirect_based_on_device
+    if request.user_agent =~ /Mobile|Android|iPhone/
+      case action_name
+      when 'lp'
+        redirect_to action: 'index' # スマホ用にリダイレクト
+      when 'lp_en'
+        redirect_to action: 'index_en'
+      end
+    else
+      case action_name
+      when 'index'
+        redirect_to action: 'lp' # PC用にリダイレクト
+      when 'index_en'
+        redirect_to action: 'lp_en'
+      end
+    end
   end
 end

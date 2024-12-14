@@ -1381,3 +1381,15 @@ html, body {
     border-radius: 8px; /* 見た目を少し柔らかく */
   }
 }
+
+/* デフォルトのスタイル（PCやタブレット用） */
+.responsive-table col.col-3 {
+  width: 50%; /* 必要に応じて調整 */
+}
+
+/* スマホ版スタイル（768px以下の場合） */
+@media screen and (max-width: 768px) {
+  .responsive-table col.col-3 {
+    width: auto; /* 幅を元に戻す */
+  }
+}

@@ -1,53 +1,52 @@
-- set_meta_tags  title: ''
+- set_meta_tags  title: 'お申し込みフォーム確認'
 - set_meta_tags  description: ''
 
-=  form_for @contact, url: thanks_contacts_path(@contact) do |f|
+= form_for @contact, url: thanks_contacts_path(@contact) do |f|
   br
   br
   .tops-wrapper
-    h2.headline
-      | お問い合わせ確認フォーム
-  table.company.responsive-table
-      colgroup
-        col.col-1
-        col.col-2
-        col.col-3
-      tr
-        td.label-cell
-          strong.label 必須
-        td.arrow-box-cell
-          | 担当者名
-        td.responsive-cell
-         .input-container
-         = f.hidden_field :name
-         = @contact.name
-      tr
-        td.label-cell
-          strong.label 必須
-        td.arrow-box-cell
-          | 電話番号
-        td.responsive-cell
-         .input-container
+    h2.headline お問い合わせ確認フォーム (Contact Confirmation Form)
+  .table.company.responsive-table
+    colgroup
+      col.col-1
+      col.col-2
+      col.col-3
+    tr
+      td.label-cell
+        strong.label 必須
+      td.arrow-box-cell
+        | 担当者名 (Name)
+      td.responsive-cell
+        .input-container
+          = f.hidden_field :name
+          = @contact.name
+    tr
+      td.label-cell
+        strong.label 必須
+      td.arrow-box-cell
+        | 電話番号 (Phone Number)
+      td.responsive-cell
+        .input-container
           = f.hidden_field :tel
           = @contact.tel
-      tr
-        td.label-cell
-          strong.label 必須
-        td.arrow-box-cell
-          | メールアドレス
-        td.responsive-cell
-         .input-container
+    tr
+      td.label-cell
+        strong.label 必須
+      td.arrow-box-cell
+        | メールアドレス (Email Address)
+      td.responsive-cell
+        .input-container
           = f.hidden_field :email
           = @contact.email
-      tr
-        td.label-cell
-          strong.label 必須
-        td.arrow-box-cell
-          | 問い合わせ内容
-        td.responsive-cell
-         .input-container
+    tr
+      td.label-cell
+        strong.label 必須
+      td.arrow-box-cell
+        | 問い合わせ内容 (Message Content)
+      td.responsive-cell
+        .input-container
           = f.hidden_field :messages
           = @contact.messages
-      tr
-       td colspan="3"
+    tr
+      td[colspan="3"]
         = f.submit "送信", class:"btn btn-primary"

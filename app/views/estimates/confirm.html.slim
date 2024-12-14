@@ -1,7 +1,7 @@
 = form_for @estimate, url: thanks_estimates_path(@estimate) do |f|
   .tops-wrapper
     h2.headline
-      | 確認フォーム
+      | 確認フォーム (Confirmation Form)
   .company-wrapper
     table.company.responsive-table
       colgroup
@@ -12,7 +12,7 @@
         td.label-cell
           strong.label 必須
         td.arrow-box-cell
-          | お名前
+          | お名前 (Name)
         td.responsive-cell
           = f.hidden_field :name
           span.arrow-box-cell
@@ -21,7 +21,7 @@
         td.label-cell
           strong.label 必須
         td.arrow-box-cell
-          | 電話番号
+          | 電話番号 (Phone Number)
         td.responsive-cell
           = f.hidden_field :tel
           span.arrow-box-cell
@@ -30,7 +30,7 @@
         td.label-cell
           strong.label 必須
         td.arrow-box-cell
-          | ご住所
+          | ご住所 (Address)
         td.responsive-cell
           = f.hidden_field :address
           span.arrow-box-cell
@@ -39,7 +39,7 @@
         td.label-cell
           strong.label 必須
         td.arrow-box-cell
-          | メールアドレス
+          | メールアドレス (Email Address)
         td.responsive-cell
           = f.hidden_field :email
           span.arrow-box-cell
@@ -48,7 +48,7 @@
         td.label-cell
           strong.label 必須
         td.arrow-box-cell
-          | 希望チェックイン日
+          | 希望チェックイン日 (Preferred Check-in Date)
         td.responsive-cell
           = f.hidden_field :check_in_date
           span.arrow-box-cell
@@ -57,7 +57,7 @@
         td.label-cell
           strong.label 必須
         td.arrow-box-cell
-          | 希望チェックアウト日
+          | 希望チェックアウト日 (Preferred Check-out Date)
         td.responsive-cell
           = f.hidden_field :check_out_date
           span.arrow-box-cell
@@ -67,16 +67,16 @@
           strong.label
         td.arrow-box-cell
           span(style="color: red; font-weight: bold;")
-            | お支払い金額
+            | お支払い金額 (Total Payment Amount)
         td.responsive-cell
           span(style="color: red; font-weight: bold;")
             | #{@total_price.to_s(:delimited)} 
-            | 円
+            | 円 (Yen)
       tr
         td.label-cell
           strong.label.label-blue 任意
         td.arrow-box-cell
-          | 要望・備考
+          | 要望・備考 (Requests/Remarks)
         td.responsive-cell
           = f.hidden_field :remarks
           span.arrow-box-cell
@@ -84,5 +84,4 @@
       tr
         td colspan="3"
          .center
-          = f.submit "決済画面へ移動する", class: "btn btn-primary"
-
+          = f.submit "決済画面へ移動する (Proceed to Payment Screen)", class: "btn btn-primary"

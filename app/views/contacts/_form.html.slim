@@ -1,46 +1,47 @@
 - if @contact.errors.any?
-  strong 入力内容にエラーがあります
+  strong 入力内容にエラーがあります (Errors in the input details)
   ul
     - @contact.errors.each do |attr, msg|
       li= msg
     br
-table.company.responsive-table
-      colgroup
-        col.col-1
-        col.col-2
-        col.col-3
-      tr
-        td.label-cell
-          strong.label 必須
-        td.arrow-box-cell
-          | お名前
-        td.responsive-cell
-         .input-container
-           = f.text_field :name,  placeholder:"山田　太郎"
-      tr
-        td.label-cell
-          strong.label 必須
-        td.arrow-box-cell
-          | 電話番号
-        td.responsive-cell
-         .input-container
-          = f.text_field :tel, placeholder:"080-0000-0000"
-      tr
-        td.label-cell
-          strong.label 必須
-        td.arrow-box-cell
-          | メールアドレス
-        td.responsive-cell
-         .input-container
-          = f.email_field :email, placeholder:"abc@def.jp"
-      tr
-        td.label-cell
-          strong.label.label-blue 任意
-        td.arrow-box-cell
-          | お問い合わせ内容
-        td.responsive-cell
-         .input-container
-          = f.text_area :messages, placeholder:"（例）ご希望内容等"
-      tr
-        td colspan="3"
-          = f.submit "確認画面", class:"btn btn-primary"
+
+.table.company.responsive-table
+  colgroup
+    col.col-1
+    col.col-2
+    col.col-3
+  tr
+    td.label-cell
+      strong.label 必須
+    td.arrow-box-cell
+      | お名前 (Name)
+    td.responsive-cell
+      .input-container
+        = f.text_field :name,  placeholder:"山田　太郎"
+  tr
+    td.label-cell
+      strong.label 必須
+    td.arrow-box-cell
+      | 電話番号 (Phone Number)
+    td.responsive-cell
+      .input-container
+        = f.text_field :tel, placeholder:"080-0000-0000"
+  tr
+    td.label-cell
+      strong.label 必須
+    td.arrow-box-cell
+      | メールアドレス (Email Address)
+    td.responsive-cell
+      .input-container
+        = f.email_field :email, placeholder:"abc@def.jp"
+  tr
+    td.label-cell
+      strong.label.label-blue 任意
+    td.arrow-box-cell
+      | お問い合わせ内容 (Message Content)
+    td.responsive-cell
+      .input-container
+        = f.text_area :messages, placeholder:"（例）ご希望内容等"
+  tr
+    td[colspan="3"]
+      = f.submit "確認画面", class:"btn btn-primary"

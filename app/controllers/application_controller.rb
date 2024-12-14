@@ -2,10 +2,8 @@ class ApplicationController < ActionController::Base
   helper_method :pc_device?
 
 private
-  # PCデバイスの判定メソッド
-  def pc_device?
-    !(request.user_agent =~ /Mobile|Android/)
-  end
+
+  
   
  def after_sing_in_path_for(resource)
    case resource

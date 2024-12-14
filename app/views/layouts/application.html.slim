@@ -9,12 +9,9 @@ html
         .col-xs-6
         .col-xs-4
       .row.navi
-       .col-xs-8.center
-           p.notice
-            = notice
-           p.alert
-            = alert
-       .col-xs-4
+       .col-xs-12.text-right
+           = link_to "日本語", "/", class:"btn btn-default"
+           = link_to "ENGLISH", "/index_en", class:"btn btn-default"
            = link_to "お問い合わせ", "/contacts/new", class:"btn btn-default"
   body
     main

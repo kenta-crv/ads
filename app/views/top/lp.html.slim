@@ -18,9 +18,48 @@
         =link_to '/estimates/new' do
          =image_tag 'click3.webp', width: '100%', class: 'center', alt:"自動販売機の一括見積もり『自動販売機ねっと』をご利用ならこちらをクリック。簡単60秒で無料で自動販売機を一括比較見積もり"
 
+
 br
 hr.line
 br
+
+.section
+  .swiper-container
+    .swiper-wrapper
+      / 一枚目の画像を固定
+      .swiper-slide
+        = link_to asset_path("interior/base.jpeg"), data: { fancybox: "gallery" } do
+          = image_tag asset_path("interior/base.jpeg"), loading: "lazy", alt: "Image 1"
+
+      / interiorディレクトリ内の画像を動的に取得
+      - interior_images = Dir.glob(Rails.root.join("app/assets/images/interior/*")).map { |path| File.basename(path) }
+      - interior_images.each_with_index do |image, index|
+        .swiper-slide
+          = link_to asset_path("interior/#{image}"), data: { fancybox: "gallery" } do
+            = image_tag asset_path("interior/#{image}"), loading: "lazy", alt: "Image #{index + 2}"
+
+  .div-slider-thumbnails
+    / 一枚目のサムネイル
+    = link_to asset_path("interior/base.jpeg"), data: { fancybox: "gallery" } do
+      = image_tag asset_path("interior/base.jpeg"), class: "thumbnail", loading: "lazy", alt: "Thumbnail 1"
+
+    / interiorディレクトリ内の画像をサムネイルとして取得
+    - interior_images.each_with_index do |image, index|
+      = link_to asset_path("interior/#{image}"), data: { fancybox: "gallery" } do
+        = image_tag asset_path("interior/#{image}"), class: "thumbnail", loading: "lazy", alt: "Thumbnail #{index + 2}"
+
+  / 矢印ナビゲーション
+  .swiper-button-prev
+  .swiper-button-next
+
+  / ページネーション
+  .swiper-pagination
+
+
+br
+hr.line
+br
+
 
 /# push font
 h2.push
@@ -179,11 +218,11 @@ br
      tr
       th.company-cell 初回清掃費用等
      tr 
-      td.responsive-cel.red 初回のみ30,000円
+      td.responsive-cel.red 初回のみ9,000円
      tr
       th.company-cell 最低宿泊日数
      tr 
-      td.responsive-cel.red 5泊〜
+      td.responsive-cel.red 3泊〜
 br
 hr.line
 br/

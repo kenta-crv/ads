@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   get "/privacy" => 'top#privacy' # ユーザー側トップ
   get "/cancalpolicy" => 'top#cancalpolicy' # ユーザー側トップ
   get 'top/calculate_price', to: 'top#calculate_price'
+
+  get "/lp_en" => 'top#lp_en'
+  get "/index_en" => 'top#index_en'
+  
   # 管理者アカウント
   devise_for :admins, controllers: {
     registrations: 'admins/registrations',

@@ -3,34 +3,28 @@
 .section
   .swiper-container
     .swiper-wrapper
-      / 一枚目の画像を固定
+      / Fix the first image
       .swiper-slide
         = link_to asset_path("interior/base.jpeg"), data: { fancybox: "gallery" } do
-          = image_tag asset_path("interior/base.jpeg"), loading: "lazy", alt: "Image 1"
+          = image_tag asset_path("interior/base.jpeg"), loading: "lazy"
 
-      / interiorディレクトリ内の画像を動的に取得
-      - interior_images = Dir.glob(Rails.root.join("app/assets/images/interior/*")).map { |path| File.basename(path) }
+      / Dynamically retrieve images from the interior directory
+      - interior_images = Dir.glob(Rails.root.join("app/assets/images/interior/*")).map { |path| File.basename(path) }.first(5)
       - interior_images.each_with_index do |image, index|
         .swiper-slide
           = link_to asset_path("interior/#{image}"), data: { fancybox: "gallery" } do
-            = image_tag asset_path("interior/#{image}"), loading: "lazy", alt: "Image #{index + 2}"
+            = image_tag asset_path("interior/#{image}"), loading: "lazy"
 
   .div-slider-thumbnails
-    / 一枚目のサムネイル
+    / Thumbnail for the first image
     = link_to asset_path("interior/base.jpeg"), data: { fancybox: "gallery" } do
-      = image_tag asset_path("interior/base.jpeg"), class: "thumbnail", loading: "lazy", alt: "Thumbnail 1"
+      = image_tag asset_path("interior/base.jpeg"), class: "thumbnail", loading: "lazy"
 
-    / interiorディレクトリ内の画像をサムネイルとして取得
+    / Retrieve thumbnails from the interior directory, limit to 5
     - interior_images.each_with_index do |image, index|
       = link_to asset_path("interior/#{image}"), data: { fancybox: "gallery" } do
-        = image_tag asset_path("interior/#{image}"), class: "thumbnail", loading: "lazy", alt: "Thumbnail #{index + 2}"
+        = image_tag asset_path("interior/#{image}"), class: "thumbnail", loading: "lazy"
 
-  / 矢印ナビゲーション
-  .swiper-button-prev
-  .swiper-button-next
-
-  / ページネーション
-  .swiper-pagination
 
 
 hr.line
@@ -207,14 +201,14 @@ br
       th.company-cell 繁忙時期１泊費用
      tr 
       td.responsive-cel.red 1日55,000円
-     /tr
-      /th.company-cell 初回清掃費用等
-     /tr 
-      /td.responsive-cel.red 初回のみ30,000円
+     tr
+      th.company-cell 初回清掃費用等
+     tr 
+      td.responsive-cel.red 初回のみ9,000円
      tr
       th.company-cell 最低宿泊日数
      tr 
-      td.responsive-cel.red 5泊〜
+      td.responsive-cel.red 3泊〜
 br
 hr.line
 br/
