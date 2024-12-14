@@ -1,7 +1,7 @@
 br
 .tops-wrapper
   h2.headline
-    | お申し込み頂きありがとうございます。 (Thank you for your application.)
+    | お申し込み頂きありがとうございます。 
   p
     | ご利用ありがとうございます。以下より決済を実行しお申し込みが完了となります。 (Thank you for using our service. Please complete your application by making a payment below.)
   = form_with url: checkout_path(estimate_id: @estimate.id), method: :post, local: true do

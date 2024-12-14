@@ -45,24 +45,6 @@ br
      =image_tag 'click3.webp', width: '70%', class: 'center', alt:"自動販売機の一括見積もり『自動販売機ねっと』をご利用ならこちらをクリック。簡単60秒で無料で自動販売機を一括比較見積もり"
 hr.line
 br
-.top-wrapper
-  h2.heading
-   strong
-    | 料金シミュレーション
-.row
- .col-sm-4
-   | チェックイン日
-   = text_field_tag :check_in_date, nil, class: 'flatpickr', data: { target: 'flatpickr' }
- .col-sm-4
-   | チェックアウト日
-   = text_field_tag :check_out_date, nil, class: 'flatpickr', data: { target: 'flatpickr' }
- .col-sm-4
-   #price-display
-
-br
-hr.line
-br
-
 
 /# USP Point
 .top-wrapper

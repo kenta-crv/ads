@@ -11,69 +11,30 @@ class EstimatesController < ApplicationController
   
     def confirm
       @estimate = Estimate.new(estimate_params)
-    
-      # 宿泊日数と料金計算
-      check_in_date = @estimate.check_in_date
-      check_out_date = @estimate.check_out_date
-    
-      if check_in_date.nil? || check_out_date.nil?
-        flash[:error] = "チェックイン日またはチェックアウト日が入力されていません。"
-        render :new and return
-      end
-    
-      num_days = (check_out_date - check_in_date).to_i
-    
-      if num_days < 5
-        flash[:error] = "宿泊日数は最低5泊以上必要です。"
-        render :new and return
-      end
-    
-      # サービスで料金計算を行う
+  
+      check_in_date = @estimate.check_in_date.to_date
+      check_out_date = @estimate.check_out_date.to_date
+  
       result = PriceCalculator.calculate_total_price(check_in_date, check_out_date)
-    
-      @normal_price_per_night = PriceCalculator::NORMAL_PRICE_PER_NIGHT
-      @peak_price_per_night = PriceCalculator::PEAK_PRICE_PER_NIGHT
+  
+      if result[:error]
+        flash[:error] = result[:error]
+        render :new and return
+      end
+  
       @num_normal_days = result[:normal_days]
       @num_peak_days = result[:peak_days]
-      @total_price = result[:total_price].to_i
+      @total_price = result[:total_price]
+      @normal_price_per_night = result[:normal_price_per_night]
+      @peak_price_per_night = result[:peak_price_per_night]
+      @initial_cost = result[:initial_cost] # 初期費用
+  
       if @estimate.valid?
-        render :action => 'confirm'
+        render :confirm
       else
-        render :action => 'new'
+        render :new
       end
     end
-    
-    
-    def calculate_total_price(check_in_date, check_out_date, num_days)
-      num_normal_days = 0
-      num_peak_days = 0
-    
-      # 宿泊日ごとに繁忙期か通常期かを判定
-      (0...num_days).each do |i|
-        current_date = check_in_date + i.days
-        if peak_season?(current_date)
-          num_peak_days += 1
-        else
-          num_normal_days += 1
-        end
-      end
-    
-      total_price = (num_normal_days * @normal_price_per_night) + (num_peak_days * @peak_price_per_night)
-      return num_normal_days, num_peak_days, total_price
-    end
-    
-    def peak_season?(date)
-      peak_seasons = [
-        (Date.new(date.year, 12, 20)..Date.new(date.year + 1, 1, 10)),
-        (Date.new(date.year, 1, 25)..Date.new(date.year, 2, 10)),
-        (Date.new(date.year, 3, 20)..Date.new(date.year, 4, 10)),
-        (Date.new(date.year, 4, 28)..Date.new(date.year, 5, 10)),
-        (Date.new(date.year, 7, 1)..Date.new(date.year, 8, 31))
-      ]
-    
-      peak_seasons.any? { |season| season.cover?(date) }
-    end
-    
       
     def thanks
       @estimate = Estimate.new(estimate_params)

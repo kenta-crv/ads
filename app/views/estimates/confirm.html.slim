@@ -1,7 +1,7 @@
 = form_for @estimate, url: thanks_estimates_path(@estimate) do |f|
   .tops-wrapper
     h2.headline
-      | 確認フォーム (Confirmation Form)
+      | 確認フォーム
   .company-wrapper
     table.company.responsive-table
       colgroup
@@ -85,3 +85,33 @@
         td colspan="3"
          .center
           = f.submit "決済画面へ移動する (Proceed to Payment Screen)", class: "btn btn-primary"
+br/
+br/
+.tops-wrapper
+br
+ h2.headline 宿泊確認フォーム
+ table.company.responsive-table
+  tr
+   td.label-cell 初期費用 (Initial Cost)
+   td.responsive-cell
+     | #{PriceCalculator.format_price(@initial_cost)} 円
+  tr
+    td.label-cell 通常期の日数 (Normal Days)
+    td.responsive-cell
+      | #{@num_normal_days || 0} 日
+  tr
+   td.label-cell 通常期の1泊あたり料金 (Normal Price per Night)
+   td.responsive-cell
+    | #{number_with_delimiter(@normal_price_per_night)} 円
+  tr
+    td.label-cell 繁忙期の日数 (Peak Days)
+    td.responsive-cell
+      | #{@num_peak_days || 0} 日
+  tr
+   td.label-cell 繁忙期の1泊あたり料金 (Peak Price per Night)
+   td.responsive-cell
+    | #{number_with_delimiter(@peak_price_per_night)} 円
+  tr
+    td.label-cell 合計料金 (Total Price)
+    td.responsive-cell
+      | #{PriceCalculator.format_price(@total_price)} 円

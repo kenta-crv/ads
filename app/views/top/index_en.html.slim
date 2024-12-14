@@ -32,31 +32,6 @@ hr.line
 h2.push
    span
      | Conveniently located just 7m from Ebisu!Luxurious high-end mansion accommodation
-hr.line
-br
-
-.row
-  .col-sm-12.push
-   span
-     | \ Exclusive application only on this site! /
-   = link_to "/estimates/new" do
-     =image_tag 'click3.webp', width: '70%', class: 'center'
-hr.line
-br
-.top-wrapper
-  h2.heading
-   strong
-    | Price Simulation
-.row
- .col-sm-4
-   | Check-in Date
-   = text_field_tag :check_in_date, nil, class: 'flatpickr', data: { target: 'flatpickr' }
- .col-sm-4
-   | Check-out Date
-   = text_field_tag :check_out_date, nil, class: 'flatpickr', data: { target: 'flatpickr' }
- .col-sm-4
-   #price-display
-
 br
 hr.line
 br

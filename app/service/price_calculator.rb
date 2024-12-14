@@ -1,7 +1,8 @@
 module PriceCalculator
   NORMAL_PRICE_PER_NIGHT = 39500.00
   PEAK_PRICE_PER_NIGHT = 55000.00
-  MINIMUM_NIGHTS = 5
+  MINIMUM_NIGHTS = 3
+  INITIAL_COST = 9000.00
 
   PEAK_SEASONS = [
     (Date.new(Date.today.year, 12, 20)..Date.new(Date.today.year + 1, 1, 10)),
@@ -30,8 +31,19 @@ module PriceCalculator
       end
     end
 
-    total_price = (normal_days * NORMAL_PRICE_PER_NIGHT) + (peak_days * PEAK_PRICE_PER_NIGHT)
+    total_price = (normal_days * NORMAL_PRICE_PER_NIGHT) + (peak_days * PEAK_PRICE_PER_NIGHT) + INITIAL_COST
 
-    { total_price: total_price }
+    {
+      normal_days: normal_days,
+      peak_days: peak_days,
+      total_price: total_price,
+      normal_price_per_night: NORMAL_PRICE_PER_NIGHT,
+      peak_price_per_night: PEAK_PRICE_PER_NIGHT,
+      initial_cost: INITIAL_COST
+    }
+  end
+
+  def self.format_price(price)
+    ActionController::Base.helpers.number_with_delimiter(price)
   end
 end
