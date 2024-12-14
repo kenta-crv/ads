@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   resources :estimates do
     collection do
       post :confirm
-      post :thanks
+      get :thanks
     end
   end
 
