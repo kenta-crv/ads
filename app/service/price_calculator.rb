@@ -1,8 +1,8 @@
 module PriceCalculator
-  NORMAL_PRICE_PER_NIGHT = 39500.00
-  PEAK_PRICE_PER_NIGHT = 55000.00
+  NORMAL_PRICE_PER_NIGHT = 28500.00
+  PEAK_PRICE_PER_NIGHT = 40000.00
   MINIMUM_NIGHTS = 3
-  INITIAL_COST = 9000.00
+  INITIAL_COST = 10000.00
 
   PEAK_SEASONS = [
     (Date.new(Date.today.year, 12, 20)..Date.new(Date.today.year + 1, 1, 10)),
