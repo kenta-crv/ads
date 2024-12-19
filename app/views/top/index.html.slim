@@ -178,19 +178,19 @@ br
      tr
       th.company-cell 通常時期１泊費用
      tr 
-      td.responsive-cel.red 1日39,500円
+      td.responsive-cel.red 1日#{number_to_currency(PriceCalculator::NORMAL_PRICE_PER_NIGHT, unit: '¥', precision: 0)}
      tr
       th.company-cell 繁忙時期１泊費用
      tr 
-      td.responsive-cel.red 1日55,000円
+      td.responsive-cel.red 1日#{number_to_currency(PriceCalculator::PEAK_PRICE_PER_NIGHT, unit: '¥', precision: 0)}
      tr
       th.company-cell 初回清掃費用等
      tr 
-      td.responsive-cel.red 初回のみ9,000円
+      td.responsive-cel.red 初回のみ#{number_to_currency(PriceCalculator::INITIAL_COST, unit: '¥', precision: 0)}
      tr
       th.company-cell 最低宿泊日数
      tr 
-      td.responsive-cel.red 3泊〜
+      td.responsive-cel.red #{PriceCalculator::MINIMUM_NIGHTS}泊〜
 br
 hr.line
 br/

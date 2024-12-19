@@ -175,19 +175,21 @@ br
      tr
       th.company-cell Cost per night (normal period)
      tr 
-      td.responsive-cel.red 39,500 JPY per day
+      td.responsive-cel.red #{number_to_currency(PriceCalculator::NORMAL_PRICE_PER_NIGHT, unit: 'JPY ', precision: 0)} per day
      tr
       th.company-cell Cost per night (peak period)
      tr 
-      td.responsive-cel.red 55,000 JPY per day
+      td.responsive-cel.red #{number_to_currency(PriceCalculator::PEAK_PRICE_PER_NIGHT, unit: 'JPY ', precision: 0)} per day
      tr
       th.company-cell Initial cleaning fee
      tr 
-      td.responsive-cel.red One-time 9,000 JPY
+      td.responsive-cel.red One-time #{number_to_currency(PriceCalculator::INITIAL_COST, unit: 'JPY ', precision: 0)}
      tr
       th.company-cell Minimum stay
      tr 
-      td.responsive-cel.red 3 nights or more
+      td.responsive-cel.red #{PriceCalculator::MINIMUM_NIGHTS} nights or more
+
+
 br
 hr.line
 br/
