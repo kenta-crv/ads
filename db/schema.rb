@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_12_02_071434) do
+ActiveRecord::Schema.define(version: 2024_12_28_090315) do
 
   create_table "admins", force: :cascade do |t|
     t.string "user_name", default: "", null: false
@@ -98,6 +98,20 @@ ActiveRecord::Schema.define(version: 2024_12_02_071434) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "months", force: :cascade do |t|
+    t.string "name"
+    t.string "tel"
+    t.string "email"
+    t.string "postnumber"
+    t.string "address"
+    t.string "people"
+    t.date "check_in_date"
+    t.date "check_out_date"
+    t.string "remarks"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "offers", force: :cascade do |t|
     t.integer "client_id"
     t.integer "user_id"
@@ -141,6 +155,20 @@ ActiveRecord::Schema.define(version: 2024_12_02_071434) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "weeks", force: :cascade do |t|
+    t.string "name"
+    t.string "tel"
+    t.string "email"
+    t.string "postnumber"
+    t.string "address"
+    t.string "people"
+    t.date "check_in_date"
+    t.date "check_out_date"
+    t.string "remarks"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

@@ -1,4 +1,4 @@
-= form_for @estimate, url: thanks_estimates_path(@estimate) do |f|
+= form_for @week, url: thanks_weeks_path(@week) do |f|
   .tops-wrapper
     h2.headline
       | 確認フォーム
@@ -16,7 +16,7 @@
         td.responsive-cell
           = f.hidden_field :name
           span.arrow-box-cell
-            = @estimate.name
+            = @week.name
       tr
         td.label-cell
           strong.label 必須
@@ -25,7 +25,7 @@
         td.responsive-cell
           = f.hidden_field :tel
           span.arrow-box-cell
-            = @estimate.tel
+            = @week.tel
       tr
         td.label-cell
           strong.label 必須
@@ -34,7 +34,7 @@
         td.responsive-cell
           = f.hidden_field :address
           span.arrow-box-cell
-            = @estimate.address
+            = @week.address
       tr
         td.label-cell
           strong.label 必須
@@ -43,7 +43,7 @@
         td.responsive-cell
           = f.hidden_field :email
           span.arrow-box-cell
-            = @estimate.email
+            = @week.email
       tr
         td.label-cell
           strong.label 必須
@@ -52,7 +52,7 @@
         td.responsive-cell
           = f.hidden_field :check_in_date
           span.arrow-box-cell
-            = @estimate.check_in_date
+            = @week.check_in_date
       tr
         td.label-cell
           strong.label 必須
@@ -61,7 +61,7 @@
         td.responsive-cell
           = f.hidden_field :check_out_date
           span.arrow-box-cell
-            = @estimate.check_out_date
+            = @week.check_out_date
       tr
         td.label-cell
           strong.label
@@ -80,7 +80,7 @@
         td.responsive-cell
           = f.hidden_field :remarks
           span.arrow-box-cell
-            = @estimate.remarks
+            = @week.remarks
       tr
         td colspan="3"
          .center
@@ -90,25 +90,17 @@ br
  h2.headline 金額詳細
  table.company.responsive-table
   tr
-   td.label-cell 初期費用 (Initial Cost)
-   td.responsive-cell
-     | #{PriceCalculator.format_price(@initial_cost)} 円
+    td.label-cell 初期費用 (Initial Cost)
+    td.responsive-cell
+      | #{PriceCalculator.format_price(@initial_cost)} 円
   tr
-    td.label-cell 通常期の日数 (Normal Days)
+    td.label-cell 宿泊日数 (Total Nights)
     td.responsive-cell
       | #{@num_normal_days || 0} 日
   tr
-   td.label-cell 通常期の1泊あたり料金 (Normal Price per Night)
-   td.responsive-cell
-    | #{number_with_delimiter(@normal_price_per_night)} 円
-  tr
-    td.label-cell 繁忙期の日数 (Peak Days)
+    td.label-cell 1泊あたり料金 (Price per Night)
     td.responsive-cell
-      | #{@num_peak_days || 0} 日
-  tr
-   td.label-cell 繁忙期の1泊あたり料金 (Peak Price per Night)
-   td.responsive-cell
-    | #{number_with_delimiter(@peak_price_per_night)} 円
+      | #{number_with_delimiter(@normal_price_per_night)} 円
   tr
     td.label-cell 合計料金 (Total Price)
     td.responsive-cell

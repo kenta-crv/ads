@@ -1,5 +1,5 @@
-- set_meta_tags  title: '渋谷駅まで電車で2分！東京屈指の人気街【恵比寿】マンション'
-- set_meta_tags  description: '渋谷駅まで電車で2分！東京屈指の人気街【恵比寿】マンション'
+- set_meta_tags  title: '渋谷駅まで電車で2分！東京屈指の人気街【恵比寿】ウィークリーマンション'
+- set_meta_tags  description: '渋谷駅まで電車で2分！東京屈指の人気街【恵比寿】ウィークリーマンション'
 .section
   .swiper-container
     .swiper-wrapper
@@ -31,9 +31,9 @@ hr.line
 /# push font
 h2.push
    span
-     | 利便性抜群の恵比寿徒歩7分！
+     | 利便性抜群の恵比寿駅徒歩7分！
      br
-     | ラグジュアリー高級マンション宿泊
+     | ラグジュアリーウィークリーマンション
 hr.line
 br
 
@@ -41,7 +41,7 @@ br
   .col-sm-12.push
    span
      | \ 本サイト限定申し込み受付!! /
-   = link_to "/estimates/new" do
+   = link_to "/weeks/new" do
      =image_tag 'click3.webp', width: '70%', class: 'center', alt:"自動販売機の一括見積もり『自動販売機ねっと』をご利用ならこちらをクリック。簡単60秒で無料で自動販売機を一括比較見積もり"
 hr.line
 br
@@ -54,7 +54,7 @@ br
      | 『概要』
   br
   h6.heading
-    | 恵比寿から徒歩７分にある好立地マンション。民泊でよくある築年数の古いマンションではなく、ハイグレードマンションとなります。
+    | 恵比寿から徒歩７分にある好立地マンション。民泊でよくある築年数の古いマンションではなく、築年数の浅いハイグレードマンションとなります。
   .row.center
     .col-sm-5
       br/
@@ -73,7 +73,7 @@ br
        td.responsive-cel.red 40平米・1LDK（10畳・6畳）
       tr
        th.company-cell ベッド
-       td.responsive-cel.red シングル1 / セミダブル1
+       td.responsive-cel.red セミダブル1
       tr
        th.company-cell 対応言語
        td.responsive-cel.red 日本語・英語
@@ -119,6 +119,8 @@ br
   .row.center
     .col-sm-6
       =image_tag 'ebisu2.webp', width:"100%", class: 'center'
+      br/
+      br/
     .col-sm-6
       =image_tag 'ebisu3.webp', width:"100%", class: 'center'
 br
@@ -129,7 +131,7 @@ br
 /# inquiry image
 .row
   .col-sm-12.center
-    =link_to "/estimates/new", :target=>["_blank"]   do
+    =link_to "/weeks/new", :target=>["_blank"]   do
       =image_tag 'click3.webp', width: '70%', class: 'center'
 
 br
@@ -150,6 +152,8 @@ br
   .row.center
     .col-sm-6
       =image_tag 'ebisu5.webp', width:"100%", class: 'center'
+      br/
+      br/
     .col-sm-6
       =image_tag 'ebisu6.webp', width:"100%", class: 'center'
 br
@@ -159,7 +163,7 @@ br
 /# inquiry image
 .row
   .col-sm-12.center
-    =link_to "/estimates/new", :target=>["_blank"]   do
+    =link_to "/weeks/new", :target=>["_blank"]   do
       =image_tag 'click3.webp', width: '70%', class: 'center'
 
 br
@@ -175,22 +179,19 @@ br
   br
   br/
   table.list.responsive-table.center
-     tr
-      th.company-cell 通常時期１泊費用
-     tr 
-      td.responsive-cel.red 1日#{number_to_currency(PriceCalculator::NORMAL_PRICE_PER_NIGHT, unit: '¥', precision: 0)}
-     tr
-      th.company-cell 繁忙時期１泊費用
-     tr 
-      td.responsive-cel.red 1日#{number_to_currency(PriceCalculator::PEAK_PRICE_PER_NIGHT, unit: '¥', precision: 0)}
-     tr
+    tr
+      th.company-cell 1日当たりの料金
+    tr
+      td.responsive-cell.red 1日#{number_to_currency(PriceCalculator::WEEKLY_NORMAL_PRICE_PER_NIGHT, unit: '¥', precision: 0)}
+    tr
       th.company-cell 初回清掃費用等
-     tr 
-      td.responsive-cel.red 初回のみ#{number_to_currency(PriceCalculator::INITIAL_COST, unit: '¥', precision: 0)}
-     tr
+    tr
+      td.responsive-cell.red 初回のみ#{number_to_currency(PriceCalculator::INITIAL_COST, unit: '¥', precision: 0)}
+    tr
       th.company-cell 最低宿泊日数
-     tr 
-      td.responsive-cel.red #{PriceCalculator::MINIMUM_NIGHTS}泊〜
+    tr
+      td.responsive-cell.red #{PriceCalculator::WEEKLY_MINIMUM_NIGHTS}泊〜
+
 br
 hr.line
 br/
@@ -199,17 +200,19 @@ br/
 .top-wrapper
   h2.heading
     strong
-      | 設備・付属について
+      | 設備・付属
   br/
   br/
   table.list.responsive-table.center
       tr
        th.company-cell 設備
+      tr 
        td.responsive-cel
         | 鉄筋コンクリート造/築5年以内/オートロック/エレベータ/バルコニー/バストイレ/室内洗濯機置場/バス有/浴室乾燥機/給湯追い焚き有/IHコンロ有/TV/エアコン/乾燥機付き洗濯機/冷蔵庫/セミダブルベッド/恵比寿駅10分以内
 
       tr
        th.company-cell アメニティ
+      tr 
        td.responsive-cel
         | シャンプー/リンス/ボディソープ/ティッシュペーパー（2箱）/トイレットペーパー（5個）/歯ブラシ（2本）/バスタオル/タオル/掃除用品一式/フライパン/カトラリー一式/その他調理備品各種/一部調味料/
 
@@ -223,7 +226,7 @@ br
   .col-sm-12.push
    span
      | \ カンタン60秒入力! /
-   = link_to "/estimates/new" do
+   = link_to "/weeks/new" do
      =image_tag 'click3.webp', width: '70%', class: 'center', alt:"自動販売機の一括見積もり『自動販売機ねっと』をご利用ならこちらをクリック。簡単60秒で無料で自動販売機を一括比較見積もり"
 
 br
@@ -251,7 +254,7 @@ br
   .col-sm-12.push
    span
      | \ カンタン60秒入力! /
-   = link_to "/estimates/new" do
+   = link_to "/weeks/new" do
      =image_tag 'click3.webp', width: '70%', class: 'center', alt:"自動販売機の一括見積もり『自動販売機ねっと』をご利用ならこちらをクリック。簡単60秒で無料で自動販売機を一括比較見積もり"
 
 br
@@ -273,21 +276,21 @@ ul.flow.center
       dt
         span.icon
           | STEP.01
-        | ご利用日時・人数の決定
+        | フォーム入力
       dd.center
-        | まずは下記よりお問い合わせをお願いします。
+        | フォームより情報入力と
         br
-        | 空き状況を確認し通知を差し上げます。
+        | 日程のご入力をお願いします。
   li
     dl
       dt
         span.icon
           | STEP.02
-        | 決済のご案内
+        | 決済
       dd.center
-        | 決済URLをお送り致しますのでご対応くださいませ。
+        | 決済リンクへ移行しますので、
         br
-        | 後払い決済及びクレジットカード払いが可能となります。
+        | お支払いを完了してください。
   li
     dl
       dt
@@ -308,5 +311,5 @@ br
   .col-sm-12.push
    span
      | \ カンタン60秒入力! /
-   = link_to "/estimates/new" do
+   = link_to "/weeks/new" do
      =image_tag 'click3.webp', width: '70%', class: 'center', alt:"自動販売機の一括見積もり『自動販売機ねっと』をご利用ならこちらをクリック。簡単60秒で無料で自動販売機を一括比較見積もり"

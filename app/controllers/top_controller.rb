@@ -6,6 +6,12 @@ class TopController < ApplicationController
   def lp
   end
 
+  def monthly
+  end
+
+  def weekly
+  end
+
   def index_en
   end
 

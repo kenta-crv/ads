@@ -15,7 +15,18 @@ class PaymentsController < ApplicationController
     check_in_date = @estimate.check_in_date
     check_out_date = @estimate.check_out_date
 
-    result = PriceCalculator.calculate_total_price(check_in_date, check_out_date)
+    # 適切なモードで料金計算を実行
+    model_type = params[:model_type] || 'Estimate'
+    mode = case model_type
+           when 'Estimate' then :estimate
+           when 'Month' then :monthly
+           when 'Week' then :weekly
+           else
+             redirect_to cancel_url, alert: "無効なモデルタイプです。"
+             return
+           end
+
+    result = PriceCalculator.calculate_total_price(check_in_date, check_out_date, mode: mode)
 
     if result[:error]
       flash[:error] = result[:error]
@@ -42,7 +53,7 @@ class PaymentsController < ApplicationController
           location_id: ENV['SQUARE_LOCATION_ID']
         },
         checkout_options: {
-          redirect_url: success_url(estimate_id: @estimate.id)
+          redirect_url: success_url(estimate_id: @estimate.id, model_type: model_type)
         }
       }
     )
@@ -68,6 +79,20 @@ class PaymentsController < ApplicationController
   private
 
   def set_estimate
-    @estimate = Estimate.find(params[:estimate_id])
+    # リクエストからモデルタイプを判別
+    model_type = params[:model_type] || 'Estimate'
+    model_id = params[:id] || params[:estimate_id] # IDの取得を柔軟に
+
+    # 適切なモデルクラスを取得
+    case model_type
+    when 'Estimate'
+        @estimate = Estimate.find_by(id: model_id)
+    when 'Month'
+        @estimate = Month.find_by(id: model_id)
+    when 'Week'
+        @estimate = Week.find_by(id: model_id)
+    else
+      raise ActiveRecord::RecordNotFound, "Invalid model type: #{model_type}"
+    end
   end
 end

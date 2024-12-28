@@ -1,0 +1,563 @@
+- set_meta_tags noindex: true
+.center
+.tops-wrapper
+br
+ h2.headline  
+   |基本情報　
+   = link_to "一覧に戻る", weeks_path, class: "btn btn-default"
+   = link_to "編集する", edit_week_path(@week), class: "btn btn-primary"
+   = link_to "削除する", week_path(@week), class: "btn btn-secondary", method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-danger"
+ table.company
+       colgroup
+         col width="10%"
+         col width="20%"
+         col width="70%"
+       tr
+         td
+           strong.label.label-blue.point
+            | Point
+            span.word 個人でフルネーム登録をされている場合、開示前に情報の公開を行うことになりますので、苗字のみに変更します。また、法人やマンション名がある場合、それに切り替えます。
+         td.arrow_box
+           | 会社名
+         td
+           = @week.co
+       tr
+         td
+           strong.label 
+         td.arrow_box
+           | 担当者名
+         td
+           = @week.name
+       tr
+         td
+           strong.label 
+         td.arrow_box
+           | 電話番号
+         td
+           = @week.tel
+       tr
+         td
+           strong.label.label-blue.point
+            | Point
+            span.word 住所が途中までの場合はヒアリングを行なってください。
+         td.arrow_box
+           | 設置先住所
+         td
+           = @week.address
+       tr
+         td
+           strong.label 
+         td.arrow_box
+           | メールアドレス
+         td
+           = @week.email
+       tr
+         td
+           strong.label.label-blue.point
+            | Point
+            span.word 業種が未記入や曖昧な場合は確認を行なって記入してください。また業種によってはサービス業や建設業の場合、ヘルプスタッフや来客もあるため利用人数が変わる場合があります。
+         td.arrow_box
+           | 設置先業種
+         td
+           = @week.industry
+       tr
+         td
+           strong
+         td.arrow_box
+           | 希望ベンダー
+         td
+           = @week.vender
+       tr
+         td
+           strong.label.label-blue.point
+            | Point
+            span.word 『いいえ』となっている場合、理由をヒアリングしましょう。1社のみでは設置が叶わない場合が多いことを伝え、なるべく多くの企業で見積もりを行った方が良いことを伝えます。
+         td.arrow_box
+           | その他の自販機見積もりを希望しますか？
+         td
+           = @week.other
+       tr
+         td
+           strong.label.label-blue 
+         td.arrow_box
+           | 設置箇所
+           br
+           |（※ex.屋内・駐車場等）
+         td
+           = @week.installation
+       tr
+         td
+           strong.label.label-blue.point
+            | Point
+            span.word 
+               |現状10名程度では記載しているだけで設置が難しくなります。例えば建設業であればヘルプ等含めて何名ほど事務所を使うか、介護であればスタッフ・来客・入居者の総合数を明記します。
+               br/
+               |尚、外を歩く人は基本カウントしませんが、駅や商店街等、明らかな集客と判断できる場合は記載しましょう。
+         td.arrow_box
+           | 想定される利用人数
+           br
+           |(※屋内の場合)
+         td
+          = @week.people
+       tr
+         td
+           strong.label.label-blue.point
+            | Point
+            span.word 交換の場合、必ず交換理由をヒアリングします。交換の理由によって自社ベンダーか、メーカーかの判断を行えます。基本的に200本を下回る場合は他メーカーでも設置不可の判断となります。
+         td.arrow_box
+           | 自販機について
+         td
+           = @week.chenge
+       tr
+         td
+           strong.label.label-blue.point
+            | Point
+            span.word 理由に問わず、設置中メーカーへは見積もり依頼は行えません。
+         td.arrow_box
+           | （交換）設置中のメーカー
+           br
+           |（※交換・追加の場合）
+         td
+           = @week.change_before
+       tr
+         td
+           strong.label.label-blue.point
+            | Point
+            span.word 
+             | この項目は非常に重要となります。メーカーから出た条件を先方にそのまま伝えるのではなく、当社の仲介収益を引いて先方に提案します。
+             br/
+             | 現地調査前に先方に収益目的がどれくらいの比重があるかヒアリングしメモしておくと、提案する時の駆け引きがなくなるのでスムーズです。
+             br/
+             | このパーセンテージが低すぎると当社がボランティアに近いてくるので注意しましょう。
+         td.arrow_box
+           | 設置目的
+           br
+           |（※交換・追加の場合）
+         td
+           = @week.aim
+       tr
+         td
+           strong.label 
+         td.arrow_box
+           | 設置希望時期
+         td
+           = @week.period
+       tr
+         td
+           strong.label.label-blue.point
+            | Point
+            span.word 小学校が近くにある等、補足内容を明記します。
+         td.arrow_box
+           | 要望・備考
+         td
+           = @week.remarks
+       -if admin_signed_in?
+        tr
+         td
+           strong.label.label-blue.point
+            | Point
+            span.word ヒアリングを行った際にメーカー等には開示しない内容を記載できます。例えば『マージンがお客様で望んでいない』等
+         td.arrow_box
+          | 社内メモ
+         td
+          = @week.word
+        tr
+         td
+           strong.label.label-blue.point
+            | Point
+            span.word 販売価格はベースは150円となり、先方への提案で-10円引きであれば140円...等金額を引いていきます。
+         td.arrow_box
+          | 販売価格
+         td
+          = @week.sales_price
+        tr
+         td
+           strong.label.label-blue
+         td.arrow_box
+          | 先方パーセンテージ
+         td
+          = @week.percentage_other
+        tr
+         td
+           strong.label.label-blue
+         td.arrow_box
+          | 弊社パーセンテージ
+         td
+          = @week.percentage_i
+        tr
+         td
+           strong.label.label-blue.point
+            | Point
+            span.word このあたりは慣れとなりますが、少数設置で250本程度〜となります。
+         td.arrow_box
+          | 想定本数
+         td
+          = @week.assumed_number
+
+h2.headline  
+ | 調査進捗　
+table.company[width="100%"]
+  = form_for([@week, @comment], url: week_comments_path(week_id: @week)) do |f|
+    tbody
+      tr
+          td
+            = image_tag "cocacola-rogo.webp", width:"100px"
+          td 
+            = f.select(:cocacola,[\
+              ["依頼中","依頼中"],\
+              ["現地調査中","現地調査中"],\
+              ["見積提示中","見積提示中"],\
+              ["契約","契約"],\
+              ["設置NG","設置NG"],\
+              ["見送りNG","見送りNG"],\
+             ], include_blank: "選択してください")
+          td.comment-mail-box
+            label[for="cocacola_mail"]
+              | メールを送る
+            input[type="checkbox" id="cocacola_mail" name="cocacola_mail" disabled]
+          td
+            = @week.comment&.cocacola
+          td 
+            - if @week.comment&.cocacola_file?
+              = link_to '提案資料', @week.comment.cocacola_file.url, class:"btn btn-primary"
+            - else
+          td 
+            = @week.comment&.cocacola_suggestion
+          td 
+            = @week.comment&.cocacola_remarks
+      tr 
+          td
+            = image_tag "neos-rogo.webp", width:"100px"
+          td 
+            = f.select(:neos,[\
+              ["依頼中","依頼中"],\
+              ["現地調査中","現地調査中"],\
+              ["見積提示中","見積提示中"],\
+              ["契約","契約"],\
+              ["設置NG","設置NG"],\
+              ["見送りNG","見送りNG"],\
+             ], include_blank: "選択してください")          
+          td.comment-mail-box
+            label[for="neos_mail"]
+              | メールを送る
+            input[type="checkbox" id="neos_mail" name="neos_mail" disabled]
+          td
+            = @week.comment&.neos
+          td 
+            - if @week.comment&.neos_file?
+              = link_to '提案資料', @week.comment.neos_file.url, class:"btn btn-primary"
+            - else
+          td 
+            = @week.comment&.neos_suggestion
+          td 
+            = @week.comment&.neos_remarks
+      tr 
+          td
+            = image_tag "itoen-rogo.webp", width:"100px"
+          td 
+            = f.select(:itoen,[\
+              ["依頼中","依頼中"],\
+              ["現地調査中","現地調査中"],\
+              ["見積提示中","見積提示中"],\
+              ["契約","契約"],\
+              ["設置NG","設置NG"],\
+              ["見送りNG","見送りNG"],\
+             ], include_blank: "選択してください")
+          td.comment-mail-box
+            label[for="itoen_mail"]
+              | メールを送る
+            input[type="checkbox" id="itoen_mail" name="itoen_mail" disabled]
+          td
+            = @week.comment&.itoen
+          td 
+            - if @week.comment&.itoen_file?
+              = link_to '提案資料', @week.comment.itoen_file.url, class:"btn btn-primary"
+            - else
+          td 
+            = @week.comment&.itoen_suggestion
+          td 
+            = @week.comment&.itoen_remarks
+      tr
+          td
+            = image_tag "asahi-rogo.webp", width:"100px"
+          td 
+            = f.select(:asahi,[\
+              ["依頼中","依頼中"],\
+              ["現地調査中","現地調査中"],\
+              ["見積提示中","見積提示中"],\
+              ["契約","契約"],\
+              ["設置NG","設置NG"],\
+              ["見送りNG","見送りNG"],\
+             ], include_blank: "選択してください")          
+          td.comment-mail-box
+            label[for="asahimail"]
+              | メールを送る
+            input[type="checkbox" id="asahi_mail" name="asahi_mail" disabled]
+          td
+            = @week.comment&.asahi
+          td 
+            - if @week.comment&.asahi_file?
+              = link_to '提案資料', @week.comment.asahi_file.url, class:"btn btn-primary"
+            - else
+          td 
+            = @week.comment&.asahi_suggestion
+          td 
+            = @week.comment&.asahi_remarks          
+      tr
+          td
+            = image_tag "dydo-rogo.webp", width:"100px"
+          td 
+            = f.select(:dydo,[\
+              ["依頼中","依頼中"],\
+              ["現地調査中","現地調査中"],\
+              ["見積提示中","見積提示中"],\
+              ["契約","契約"],\
+              ["設置NG","設置NG"],\
+              ["見送りNG","見送りNG"],\
+             ], include_blank: "選択してください")
+          td.comment-mail-box
+            label[for="dydo_mail"]
+              | メールを送る
+            input[type="checkbox" id="dydo_mail" name="dydo_mail" disabled]
+          td
+            = @week.comment&.dydo
+          td 
+            - if @week.comment&.dydo_file?
+              = link_to '提案資料', @week.comment.dydo_file.url, class:"btn btn-primary"
+            - else
+          td 
+            = @week.comment&.dydo_suggestion
+          td 
+            = @week.comment&.dydo_remarks   
+      tr
+          td
+            = image_tag "yamakyu-rogo.webp", width:"100px"
+          td 
+            = f.select(:yamakyu,[\
+              ["依頼中","依頼中"],\
+              ["現地調査中","現地調査中"],\
+              ["見積提示中","見積提示中"],\
+              ["契約","契約"],\
+              ["設置NG","設置NG"],\
+              ["見送りNG","見送りNG"],\
+             ], include_blank: "選択してください")
+          td.comment-mail-box
+            label[for="yamakyu_mail"]
+              | メールを送る
+            input[type="checkbox" id="yamakyu_mail" name="yamakyu_mail" disabled]
+          td
+            = @week.comment&.yamakyu
+          td 
+            - if @week.comment&.yamakyu_file?
+              = link_to '提案資料', @week.comment.yamakyu_file.url, class:"btn btn-primary"
+            - else
+          td 
+            = @week.comment&.yamakyu_suggestion
+          td 
+            = @week.comment&.yamakyu_remarks   
+      tr
+          td
+            = image_tag "rogo.webp", width:"100px"
+          td 
+            = f.select(:net,[\
+              ["未提案","未提案"],\
+              ["提案中","提案中"],\
+              ["検討中","検討中"],\
+              ["契約","契約"],\
+              ["設置NG","設置NG"],\
+              ["見送りNG","見送りNG"],\
+             ], include_blank: "選択してください") 
+          td
+            = @week.comment&.net
+      tr
+          td
+            | その他
+          td 
+            = f.select(:body,[\
+              ["不在","不在"],\
+              ["明細待","明細待"],\
+              ["NG","NG"],\
+             ], include_blank: "選択してください")
+          td.comment-mail-box
+            label[for="body_mail"]
+              | メールを送る
+            input[type="checkbox" id="body_mail" name="body_mail" disabled]
+          td
+            = @week.comment&.body
+  
+      tr 
+          td[colspan="6"]
+           .center
+            - if @week.comment
+             = link_to "編集", edit_week_comment_path(@week, @week.comment), class: "btn btn-primary"
+             = link_to "削除", week_comment_path(@week, @week.comment), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger"
+            - else 
+             = f.submit "登録",class:"btn btn-primary"
+
+
+- @week.progresses.each do |progress|
+      table.company[width="100%"]
+       col[width="10%"]
+       col[width="10%"]
+       col[width="15%"]
+       col[width="15%"]
+       col[width="42%"]
+       col[width="8%"]
+       tr.center
+        td
+          = progress.status
+        td
+          = progress.document
+        td
+          = progress.created_at.strftime("%Y年%m月%d日")
+        td
+          = progress&.next&.strftime("%Y年%m月%d日 %-H時%-M分")
+        td
+          = progress.body
+        td
+          = link_to "削除", week_progress_path(@week, progress), method: :delete, data: {confirm:"本当に削除しますか？"}, class:"btn btn-danger"
+      .center  
+       = image_tag "down.webp",width:"50px"
+        
+
+
+- if @week.comment&.neos == "契約"
+  h2.headline  
+   | 振込口座・契約書添付
+  table.company[width="100%"]
+   = form_for([@week, @transfer], url: week_transfers_path(week_id: @week)) do |f|
+    tbody
+      tr
+          th
+            | 銀行名
+          th
+            | 支店
+          th
+            | 口座番号
+          th
+            | 口座名義
+          th
+            | メモ
+          th
+            | 契約書
+      tr
+          td
+            = f.text_field :bank
+          td
+            = f.text_field :branch
+          td
+            = f.text_field :number
+          td
+            = f.text_field :name
+          td
+            = f.text_field :body
+          td 
+            = f.file_field :document
+      tr
+          td[colspan = "6"]
+           .center 
+            = f.submit "登録", class:"btn btn-primary"
+  table.company[width="100%"]
+    - if @week.transfer
+     tr.center
+        td
+          = @week.transfer.bank
+        td
+          = @week.transfer.branch
+        td
+          = @week.transfer.number
+        td
+          = @week.transfer.name
+        td
+          = @week.transfer.body
+        td 
+          - if @week.transfer&.document?
+           = link_to '契約書', @week.transfer.document.url, class:"btn btn-primary"
+          - else
+     tr
+        td[colspan = "6"]
+         .center
+          = link_to "編集", edit_week_transfer_path(@week, @week.transfer), class:"btn btn-primary"
+          = link_to "削除", week_transfer_path(@week, @week.transfer), method: :delete, data: {confirm:"本当に削除しますか？"}, class:"btn btn-danger"
+
+- if @week.comment&.neos == "契約"
+ h2.headline  
+  | 月間売上
+ table.company[width="100%"]
+   = form_for([@week, @payment], url: week_payments_path(week_id: @week)) do |f|
+     tbody
+       col[width="33%"]
+       col[width="33%"]
+       col[width="33%"]
+       tr.ceter
+        td
+           = f.number_field :year, placeholder: "2023"
+        td
+           = f.number_field :month, placeholder: "10"
+        td
+          = f.number_field :sales, placeholder: "10000"
+        td 
+          /= f.check_box :complete
+        tr 
+           td[colspan="6"]
+            .center
+             = f.submit "登録",class:"btn btn-primary"
+ - @week.payments.each do |payment|
+       table.company[width="100%"]
+        col[width="20%"]
+        col[width="15%"]
+        col[width="15%"]
+        col[width="20%"]
+        col[width="10%"]
+        col[width="20%"]
+        tr
+         th 年月
+         th 売上
+         th パーセント
+         th 支払額
+         th 完了
+         th 削除
+        tr.center
+         td
+           = payment.year
+           |年
+           = payment.month
+           |月
+         td
+           = payment.sales
+           |円
+         td 
+           = @week.percentage_other
+         td 
+           = (payment.sales.to_i * @week.percentage_other.to_i * 0.01)
+         td
+           = check_box_tag "payment_complete_#{payment.id}", "1", payment.complete, disabled: true
+         td
+           = link_to "編集", edit_week_payment_path(@week, payment), class:"btn btn-primary"
+           = link_to "削除", week_payment_path(@week, payment), method: :delete, data: {confirm:"本当に削除しますか？"}, class:"btn btn-danger"
+
+javascript:
+  document.addEventListener("DOMContentLoaded", function(event) {
+    const companies = ['cocacola', 'neos', 'itoen', 'asahi', 'dydo', 'yamakyu', 'body'];
+    companies.forEach(function(company) {
+      setStatusMailCheckbox(`comment_${company}`, `${company}_mail`);
+    });
+  });
+
+  // メール送信のチェックボックス制御
+  function setStatusMailCheckbox(selectId, checkboxId) {
+    const selectElement = document.getElementById(selectId);
+    const checkboxElement = document.getElementById(checkboxId);
+
+    function updateCheckbox() {
+      if (selectElement.value === '見送りNG' || selectElement.value === '契約' || selectElement.value === '見積提示中') {
+        checkboxElement.disabled = false;
+        checkboxElement.checked = true;
+      } else {
+        checkboxElement.disabled = true;
+        checkboxElement.checked = false;
+      }
+    }
+
+    selectElement.addEventListener('change', updateCheckbox);
+  }
