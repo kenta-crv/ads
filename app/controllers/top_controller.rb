@@ -31,7 +31,7 @@ class TopController < ApplicationController
     render json: result
   end
 
-  def cancalpolicy
+  def cancelpolicy
   end
 
   def privacy

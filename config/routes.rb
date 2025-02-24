@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root to: 'top#index' # クライアント側トップ
   get "/lp" => 'top#lp' # ユーザー側トップ
   get "/privacy" => 'top#privacy' # ユーザー側トップ
-  get "/cancalpolicy" => 'top#cancalpolicy' # ユーザー側トップ
+  get "/cancelpolicy" => 'top#cancelpolicy' # ユーザー側トップ
   get 'top/calculate_price', to: 'top#calculate_price'
 
   get "/lp_en" => 'top#lp_en'
