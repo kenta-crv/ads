@@ -20,10 +20,7 @@ $(function() {
 // Flatpickr初期化
 document.addEventListener('DOMContentLoaded', function() {
   const availableRanges = [
-      { from: "2024-12-10", to: "2025-02-15" },
-      { from: "2025-03-25", to: "2025-05-15" },
-      { from: "2025-07-01", to: "2025-09-30" },
-      { from: "2025-12-10", to: "2026-02-15" },
+      { from: "2025-01-01", to: "2025-09-30" }
   ];
 
   flatpickr(".flatpickr", {
