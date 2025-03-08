@@ -11,26 +11,39 @@ class EstimatesController < ApplicationController
 
   def confirm
     @estimate = Estimate.new(estimate_params)
-
+  
     check_in_date = @estimate.check_in_date.to_date
     check_out_date = @estimate.check_out_date.to_date
-
+  
     result = PriceCalculator.calculate_total_price(check_in_date, check_out_date)
-
+  
     if result[:error]
       flash[:error] = result[:error]
       render :new and return
     end
-
+  
     @num_normal_days = result[:normal_days]
     @num_peak_days = result[:peak_days]
     @total_price = result[:total_price]
     @normal_price_per_night = result[:normal_price_per_night]
     @peak_price_per_night = result[:peak_price_per_night]
     @initial_cost = result[:initial_cost] # 初期費用
-
-    if @estimate.valid?
+  
+    if @estimate.save # **ここで保存**
+      # **保存成功後にメール送信**
+      EstimateMailer.received_email(@estimate).deliver
+      EstimateMailer.send_email(@estimate).deliver
+  
       render :confirm
+    else
+      render :new
+    end
+  end
+  
+  def create
+    @estimate = Estimate.new(estimate_params)
+    if @estimate.save
+      redirect_to checkout_path(estimate_id: @estimate.id) # ← ここを修正
     else
       render :new
     end
@@ -49,12 +62,7 @@ class EstimatesController < ApplicationController
       @estimate = Estimate.new(name: "ゲスト", tel: "未提供", email: "未提供")
     end
   end
-  
-  def create
-    @estimate = Estimate.new(estimate_params)
-    @estimate.save
-    redirect_to thanks_estimates_path
-  end
+
 
   def show
     @estimate = Estimate.find_by(id: params[:id])

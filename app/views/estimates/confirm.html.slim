@@ -1,14 +1,14 @@
-= form_for @estimate, url: thanks_estimates_path(@estimate) do |f|
+= form_for @estimate, url: checkout_path(estimate_id: @estimate.id), method: :post do |f|
   .tops-wrapper
     h2.headline
-      | 確認フォーム
+      | 確認フォーム[confirmation form]
   .company-wrapper
     table.company.responsive-table
       colgroup
         col.col-1
         col.col-2
         col.col-3
-      tr
+      /tr
         td.label-cell
           strong.label 必須
         td.arrow-box-cell
@@ -17,7 +17,7 @@
           = f.hidden_field :name
           span.arrow-box-cell
             = @estimate.name
-      tr
+      /tr
         td.label-cell
           strong.label 必須
         td.arrow-box-cell
@@ -26,7 +26,7 @@
           = f.hidden_field :tel
           span.arrow-box-cell
             = @estimate.tel
-      tr
+      /tr
         td.label-cell
           strong.label 必須
         td.arrow-box-cell
@@ -35,7 +35,7 @@
           = f.hidden_field :address
           span.arrow-box-cell
             = @estimate.address
-      tr
+      /tr
         td.label-cell
           strong.label 必須
         td.arrow-box-cell
@@ -84,9 +84,9 @@
       tr
         td colspan="3"
          .center
-          = f.submit "決済画面へ移動する (Proceed to Payment Screen)", class: "btn btn-primary"
+          = form_with url: checkout_path(estimate_id: @estimate.id), method: :post, local: true do
+            = submit_tag '決済 (Make Payment)', class: 'btn btn-primary'
 .tops-wrapper
-br
  h2.headline 金額詳細
  table.company.responsive-table
   tr
