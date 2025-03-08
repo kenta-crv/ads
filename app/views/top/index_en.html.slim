@@ -26,13 +26,20 @@
         = image_tag asset_path("interior/#{image}"), class: "thumbnail", loading: "lazy"
 
 
+.row
+  .col-sm-12.push
+   span
+     | \ Easy 60-second Input! /
+   = link_to "/estimates/new" do
+     =image_tag 'click3.webp', width: '70%', class: 'center'
+
+
 
 hr.line
 /# push font
 h2.push
    span
      | Conveniently located just 7m from Ebisu!Luxurious high-end mansion accommodation
-br
 hr.line
 br
 
