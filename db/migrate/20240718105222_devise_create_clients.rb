@@ -15,24 +15,35 @@ class DeviseCreateClients < ActiveRecord::Migration[5.2]
       ## Rememberable
       t.datetime :remember_created_at
 
-            #問い合わせ項目
+      #問い合わせ項目
       t.string :company #会社名
-      t.string :name #担当者
-      t.string :tel #電話番号
+      t.string :post_title #代表取締役
+      t.string :representative_name #代表者
+      #t.string :representative_kana #代表者
+      t.string :contact_name #担当者
+      #t.string :contact_kana #担当者
+      t.string :tel #携帯番号
       t.string :email #メールアドレス
-      t.string :address #所在地
-      t.string :period #導入希望時期
+      t.string :address #求人所在地
+      t.string :url #企業URL
       t.string :message #備考
       #自社入力
-      t.string :service #サービス内容
-      t.string :contract_period #契約期間
-      t.string :unit_price #単価
-      t.string :maximum_hours #最大時間数
-      t.string :approach_area #アプローチエリア
-      t.string :approach_industry #アプローチ業種
+      t.string :recruit_url #求人URL
+      t.string :visa #必要なVISA
+      t.string :business #募集業種
+      t.string :genre #募集職種
+      t.string :salary #給料条件
+      t.string :work_time #勤務時間
+      t.string :day_off #休日
+      t.string :work_contents #業務内容
+      t.string :number #採用人数
+      t.string :house_agents #自宅契約サポート
+      t.string :house_support #住居サポート
+      t.string :remarks #備考
+      t.string :plan
+      t.string :total_price 
       #契約情報
-      t.string :post_title #代表取締役
-      t.string :president_name #代表取締役
+
       t.string :agree #契約同意
       t.string :contract_date #契約日
       ## Trackable

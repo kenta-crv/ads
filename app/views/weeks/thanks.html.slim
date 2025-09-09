@@ -1,8 +1,0 @@
-br
-.tops-wrapper
-  h2.headline
-    | お申し込み頂きありがとうございます。 
-  p
-    | ご利用ありがとうございます。以下より決済を実行しお申し込みが完了となります。 (Thank you for using our service. Please complete your application by making a payment below.)
-  = form_with url: checkout_path(id: @week.id, model_type: 'Week'), method: :post, local: true do
-   = submit_tag '決済 (Make Payment)', class: 'btn btn-primary'

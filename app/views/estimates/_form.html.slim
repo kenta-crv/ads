@@ -12,6 +12,14 @@
         td.label-cell
           strong.label 必須
         td.arrow-box-cell
+          | 会社名
+        td.responsive-cell
+          .input-container
+            = f.text_field :company, placeholder: "例: 株式会社ABC"
+      tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
           | お名前 (Name)
         td.responsive-cell
           .input-container
@@ -44,18 +52,19 @@
         td.label-cell
           strong.label 必須
         td.arrow-box-cell
-          | 希望チェックイン日 (Preferred Check-in Date)
+          | URL
         td.responsive-cell
           .input-container
-            = f.text_field :check_in_date, class: 'flatpickr', data: { target: 'flatpickr' }
+            = f.url_field :url, placeholder: "例: https://abc.jp"
       tr
         td.label-cell
           strong.label 必須
         td.arrow-box-cell
-          | 希望チェックアウト日 (Preferred Check-out Date)
+          | プラン選択 (Select Plan)
         td.responsive-cell
           .input-container
-            = f.text_field :check_out_date, class: 'flatpickr', data: { target: 'flatpickr' }
+            = f.select :choice, PriceCalculator::PRICE_OPTIONS.map { |label, value| [label, value] }, {}, class: "form-control"
+
       tr
         td.label-cell
           strong.label.label-blue 任意

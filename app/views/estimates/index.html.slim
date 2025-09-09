@@ -35,33 +35,12 @@ br
      th 送信
    - @estimates_for_view.each do |estimate|
     tr
-     td = link_to estimate.co, estimate_path(estimate), clsss:"store"
+     td = link_to estimate.company, estimate_path(estimate), clsss:"store"
      td = estimate.name
      td = estimate.tel
      td = estimate.created_at.strftime("%Y年%m月%d日 %-H時%-M分%-S秒 %a")
-     td = estimate.comment ? estimate.comment.asahi : nil
-     td = estimate.comment ? estimate.comment.cocacola : nil
-     td = estimate.comment ? estimate.comment.itoen : nil
-     td = estimate.comment ? estimate.comment.dydo : nil
-     td = estimate.comment ? estimate.comment.yamakyu : nil
-     td = estimate.comment ? estimate.comment.neos : nil
-     td = estimate.comment ? estimate.comment.net : nil
-     td = estimate.comment ? estimate.comment.body : nil
-     td
-      - if estimate.comment.nil?
-       = link_to "送信", "/estimates/#{estimate.id}/select_sent", style: "color: fff", class: "btn btn-primary unsent"
-     / - elsif estimate.comment && estimate.all_comments_ng_or_blank?
-       = link_to '中古提案', old_email_estimate_path(id: estimate.id), method: :post, data: { confirm: '送信しますか？' }, class: "btn btn-primary"
-     / - elsif estimate.comment && estimate.comments_blank?
-       = link_to "送信", "/estimates/#{estimate.id}/select_sent", style: "color: fff", class: "btn btn-primary unsent"
-     / - else
-        
-  br
-    hr.line
-    br
-    = paginate(@estimates_for_view)
 
-br/
+   = paginate(@estimates_for_view)
 
 br/
 = search_form_for @q do |f|
@@ -78,7 +57,7 @@ br/
                 th
                   | 会社名
                 td
-                  = f.search_field :co_cont, type: "text"
+                  = f.search_field :company_cont, type: "text"
                 th
                   | 担当者
                 td
@@ -97,22 +76,6 @@ br/
                   = f.submit "検索する"
 
 
-
-br/
-br/
-= form_with(url: import_estimates_path, method: :post, local: true, multipart: true) do |f|
-  table.company[width="90%"]
-    tbody
-      tr
-        th[colspan="3"]
-          | ファイルインポート
-      tr
-        td
-          = f.file_field :file
-        th
-          = submit_tag "インポート",  class: 'btn btn-primary'
-        th
-          = link_to 'エクスポート', estimates_path(format: :csv, page: params[:page]), class: 'btn btn-primary'
 
 
 javascript: 

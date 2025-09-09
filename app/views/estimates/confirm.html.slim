@@ -1,7 +1,7 @@
 = form_for @estimate, url: checkout_path(estimate_id: @estimate.id), method: :post do |f|
   .tops-wrapper
     h2.headline
-      | 確認フォーム[confirmation form]
+      | 確認フォーム [confirmation form]
   .company-wrapper
     table.company.responsive-table
       colgroup
@@ -12,11 +12,19 @@
         td.label-cell
           strong.label 必須
         td.arrow-box-cell
+          | 会社名
+        td.responsive-cell
+          = f.hidden_field :company
+          span.arrow-box-cell = @estimate.company
+
+      tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
           | お名前 (Name)
         td.responsive-cell
           = f.hidden_field :name
-          span.arrow-box-cell
-            = @estimate.name
+          span.arrow-box-cell = @estimate.name
       tr
         td.label-cell
           strong.label 必須
@@ -24,8 +32,7 @@
           | 電話番号 (Phone Number)
         td.responsive-cell
           = f.hidden_field :tel
-          span.arrow-box-cell
-            = @estimate.tel
+          span.arrow-box-cell = @estimate.tel
       tr
         td.label-cell
           strong.label 必須
@@ -33,8 +40,7 @@
           | ご住所 (Address)
         td.responsive-cell
           = f.hidden_field :address
-          span.arrow-box-cell
-            = @estimate.address
+          span.arrow-box-cell = @estimate.address
       tr
         td.label-cell
           strong.label 必須
@@ -42,36 +48,24 @@
           | メールアドレス (Email Address)
         td.responsive-cell
           = f.hidden_field :email
-          span.arrow-box-cell
-            = @estimate.email
+          span.arrow-box-cell = @estimate.email
       tr
         td.label-cell
           strong.label 必須
         td.arrow-box-cell
-          | 希望チェックイン日 (Preferred Check-in Date)
+          | URL
         td.responsive-cell
-          = f.hidden_field :check_in_date
-          span.arrow-box-cell
-            = @estimate.check_in_date
+          = f.hidden_field :url
+          span.arrow-box-cell = @estimate.url
       tr
         td.label-cell
           strong.label 必須
         td.arrow-box-cell
-          | 希望チェックアウト日 (Preferred Check-out Date)
+          | プラン選択 (Select Plan)
         td.responsive-cell
-          = f.hidden_field :check_out_date
+          = f.hidden_field :choice
           span.arrow-box-cell
-            = @estimate.check_out_date
-      tr
-        td.label-cell
-          strong.label
-        td.arrow-box-cell
-          span(style="color: red; font-weight: bold;")
-            | お支払い金額 (Total Payment Amount)
-        td.responsive-cell
-          span(style="color: red; font-weight: bold;")
-            | #{@total_price.to_s(:delimited)} 
-            | 円 (Yen)
+            = PriceCalculator::PRICE_OPTIONS.key(@estimate.choice.to_i)
       tr
         td.label-cell
           strong.label.label-blue 任意
@@ -79,41 +73,14 @@
           | 要望・備考 (Requests/Remarks)
         td.responsive-cell
           = f.hidden_field :remarks
-          span.arrow-box-cell
-            = @estimate.remarks
+          span.arrow-box-cell = @estimate.remarks
+      tr
+        td.label-cell
+          strong.label
+            | 合計金額 (Total Price)
+        td.arrow-box-cell colspan="2"
+          span.arrow-box-cell = "#{PriceCalculator.format_price(@total_price)} 円"
       tr
         td colspan="3"
-         .center
-          = form_with url: checkout_path(estimate_id: @estimate.id), method: :post, local: true do
-            = submit_tag '決済 (Make Payment)', class: 'btn btn-primary'
-.tops-wrapper
- h2.headline 金額詳細
- table.company.responsive-table
-  tr
-   td.label-cell ドル円レート (USD/JPN rating)
-   td.responsive-cell
-     | 150.00円
-  tr
-   td.label-cell 初期費用 (Initial Cost)
-   td.responsive-cell
-     | #{PriceCalculator.format_price(@initial_cost)} 円
-  tr
-    td.label-cell 通常期の日数 (Normal Days)
-    td.responsive-cell
-      | #{@num_normal_days || 0} 日
-  tr
-   td.label-cell 通常期の1泊あたり料金 (Normal Price per Night)
-   td.responsive-cell
-    | #{number_with_delimiter(@normal_price_per_night)} 円
-  tr
-    td.label-cell 繁忙期の日数 (Peak Days)
-    td.responsive-cell
-      | #{@num_peak_days || 0} 日
-  tr
-   td.label-cell 繁忙期の1泊あたり料金 (Peak Price per Night)
-   td.responsive-cell
-    | #{number_with_delimiter(@peak_price_per_night)} 円
-  tr
-    td.label-cell 合計料金 (Total Price)
-    td.responsive-cell
-      | #{PriceCalculator.format_price(@total_price)} 円
+          .center
+            = f.submit '決済 (Make Payment)', class: 'btn btn-primary'

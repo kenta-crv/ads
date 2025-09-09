@@ -1,312 +1,229 @@
-- set_meta_tags  title: '渋谷駅まで電車で2分！東京屈指の人気街【恵比寿】マンション'
-- set_meta_tags  description: '渋谷駅まで電車で2分！東京屈指の人気街【恵比寿】マンション'
-.section
-  .swiper-container
-    .swiper-wrapper
-      / Fix the first image
-      .swiper-slide
-        = link_to asset_path("interior/base.jpeg"), data: { fancybox: "gallery" } do
-          = image_tag asset_path("interior/base.jpeg"), loading: "lazy"
-
-      / Dynamically retrieve images from the interior directory
-      - interior_images = Dir.glob(Rails.root.join("app/assets/images/interior/*")).map { |path| File.basename(path) }.first(5)
-      - interior_images.each_with_index do |image, index|
-        .swiper-slide
-          = link_to asset_path("interior/#{image}"), data: { fancybox: "gallery" } do
-            = image_tag asset_path("interior/#{image}"), loading: "lazy"
-
-  .div-slider-thumbnails
-    / Thumbnail for the first image
-    = link_to asset_path("interior/base.jpeg"), data: { fancybox: "gallery" } do
-      = image_tag asset_path("interior/base.jpeg"), class: "thumbnail", loading: "lazy"
-
-    / Retrieve thumbnails from the interior directory, limit to 5
-    - interior_images.each_with_index do |image, index|
-      = link_to asset_path("interior/#{image}"), data: { fancybox: "gallery" } do
-        = image_tag asset_path("interior/#{image}"), class: "thumbnail", loading: "lazy"
-
-
-
-hr.line
-/# push font
-h2.push
-   span
-     | 利便性抜群の恵比寿徒歩7分！
-     br
-     | ラグジュアリー高級マンション宿泊
-hr.line
-br
-
-.row
-  .col-sm-12.push
-   span
-     | \ 本サイト限定申し込み受付!! /
-   = link_to "/estimates/new" do
-     =image_tag 'click3.webp', width: '70%', class: 'center', alt:"自動販売機の一括見積もり『自動販売機ねっと』をご利用ならこちらをクリック。簡単60秒で無料で自動販売機を一括比較見積もり"
-hr.line
-br
-
-/# USP Point
-.top-wrapper
-  h2.heading
-    | 好立地恵比寿高級マンション
-    strong
-     | 『概要』
-  br
-  h6.heading
-    | 恵比寿から徒歩７分にある好立地マンション。民泊でよくある築年数の古いマンションではなく、ハイグレードマンションとなります。
-  .row.center
-    .col-sm-5
+- set_meta_tags  title: ''
+- set_meta_tags  description: ''
+.section.ai-wrapper
+  .contents
+    .overlayer
+      | オフィスで手軽にコーヒーを
       br/
-      =image_tag 'second.webp', width:"100%", class: 'center',alt:"問い合わせから設置までスピーディーに済ませたい。自販機を設置したいが、各メーカーに問い合わせするのが手間だなと感じる。自販機の相見積もりを簡単に取得したい。過去に現地調査で落ちてしまって困っている。自販機を交換したいが、対応してくれる自販機メーカーを探して欲しい"
-    .col-sm-7.left
-     br/
-     table.list.responsive-table.center
-      tr
-       th.company-cell 立地
-       td.responsive-cel.red 恵比寿駅徒歩７分
-      tr
-       th.company-cell 住所
-       td.responsive-cel.red 東京都渋谷区恵比寿
-      tr
-       th.company-cell 広さ
-       td.responsive-cel.red 40平米・1LDK（10畳・6畳）
-      tr
-       th.company-cell ベッド
-       td.responsive-cel.red シングル1 / セミダブル1
-      tr
-       th.company-cell 対応言語
-       td.responsive-cel.red 日本語・英語
-      tr
-       th.company-cell 築年数
-       td.responsive-cel.red ５年以内
+      | 福利厚生・収益型と多彩な対応
+      br/
+      | 月額無料『オフィスコーヒー』
+    .image-block
+      .button-wrapper
+        = link_to "無料で設置を申し込む", "/estimates/new", class:"btn btn-brown mt-3"
+      .image-wrapper
+        = image_tag "underground.webp"
 
-br
-hr.line
-br
-
-/# Trouble
-.top-wrapper
-  h2.heading
+.section.top-wrapper
+ h2.heading
     strong
-      | 住みたい街ランキング常連『恵比寿駅』
-  h6.heading
-    br
-    | 恵比寿は大人の憧れの地として知られており、非常に活気のある街として知られています。渋谷駅からわずか１駅の好立地で治安も良く住み心地・利便性ともに都内トップクラス。有名な恵比寿ガーデンプレイスもすぐ側です。
-  br/
-  br/
-  .row.center
-    .col-sm-6
-      =image_tag 'ebisu0.webp', width:"100%", class: 'center'
-    .col-sm-6
-      =image_tag 'ebisu1.webp', width:"100%", class: 'center'
+      | ご利用いただけるコーヒー機種一覧
+ .procedure-slider
+  .plan-slider
+    .plan-card
+      h3 【福利厚生向け】本格バリスタ
+      = image_tag "selection0.webp", class: 'block-image'
+      .text 液晶付きで社内の高級感も演出できるコーヒーマシンです。多彩なドリンクを飲むことができるのも魅力です。
 
-br
-hr.line
-br
+    .plan-card
+      h3 【福利厚生向け】ホットコーヒー
+      = image_tag "selection3.webp", class: 'block-image'
+      .text アイスは使わないシンプルなホットコーヒーマシンです。
 
-/# Trouble
-.top-wrapper
-  h2.heading
+    .plan-card
+      h3 【福利厚生向け】ホット＋アイスコーヒー
+      = image_tag "selection1.webp", class: 'block-image'
+      .text 暑い夏を乗り切るあなたにアイスコーヒーも楽しめるコーヒーマシンです。
+
+    .plan-card
+      h3 【収益型】ホット＋アイスコーヒー
+      = image_tag "selection3.webp", class: 'block-image'
+      .text 福利厚生ではなく、課金購入型のコーヒーマシン。企業様の負担なく収益も確保できます。
+
+
+.section.odd
+  .container
+    .row
+      .col.text-col
+        .number 01
+        .text-block
+          h2 初期費用・月額費用無料
+          p 『オフィスコーヒー』をご利用いただく際、コーヒーの機器は月額利用費無料で当社より貸し出しをさせていただいております。
+      .col.image-col
+        = image_tag 'top-image1.webp', class: 'center entire-image'
+
+.section.even
+  .container
+    .row
+      .col.image-col
+        = image_tag 'top-image2.webp', class: 'center entire-image'
+      .col.text-col
+        .number 02
+        .text-block
+          h2 変更可能な定期配送
+          p コーヒーを飲むために必要なコーヒー豆や備品は当社から定期的に配送をさせていただくので誰でも気軽にご利用いただけます。（乳製品のみ対象外）
+
+.section.odd
+  .container
+    .row
+      .col.text-col
+        .number 03
+        .text-block
+          h2 リーズナブルにコーヒーを楽しめる
+          p 『オフィスコーヒー』なら本格コーヒーを1杯135円とリーズナブルに楽しんでいただけるのでコスト面でもご安心いただけます。
+      .col.image-col
+        = image_tag 'top-image3.webp', class: 'center entire-image'
+
+.section.top-wrapper
+ h2.heading
     strong
-      | どこからでも近い
-    | 主要アクセス
-  h6.heading
-    br
-    | 恵比寿は非常に好立地エリアとして知られており、池袋・新宿・渋谷・品川・東京・六本木・銀座と全て1本でアクセスすることができます。
-  br/
-  br/
-  .row.center
-    .col-sm-6
-      =image_tag 'ebisu2.webp', width:"100%", class: 'center'
-    .col-sm-6
-      =image_tag 'ebisu3.webp', width:"100%", class: 'center'
-br
-hr.line
-br
+      | 料金案内
+ .plan-slider
+  .plan-card
+    h3 福利厚生プラン
+    = image_tag "payment1.webp", class: 'block-image'
+    ul
+      li 月額料金: 0円
+      li 定期配送: 30,000円(毎月1回)
+      li 購入方法: 無料利用可能  
+      li 1杯料金: 1杯135円〜
+      li 契約期間: 2年
+
+  .plan-card
+    h3 クレジット収益型プラン
+    = image_tag "payment2.webp", class: 'block-image'
+    ul
+      li 月額料金: 0円
+      li 定期配送: 30,000円(毎月1回)
+      li 利用方法: クレジットカード
+      li 1杯料金: 1杯250円
+      li 契約期間: 2年
+
+  .plan-card
+    h3 現金収益型プラン
+    = image_tag "payment3.webp", class: 'block-image'
+    ul
+      li 月額料金: 0円
+      li 定期配送: 30,000円(毎月1回)
+      li 利用方法: 現金
+      li 1杯料金: 自由設定
+      li 契約期間: 2年
 
 
-/# inquiry image
-.row
-  .col-sm-12.center
-    =link_to "/estimates/new", :target=>["_blank"]   do
-      =image_tag 'click3.webp', width: '70%', class: 'center'
 
-br
-hr.line
-br
-
-
-.top-wrapper
-  h2.heading
-    | 抜群にモダンな空間が人気！
+.section.top-wrapper
+ h2.heading
     strong
-      | 高級路線！
-  h6.heading
-    br
-    | 通常の民泊はいざ宿泊してみると築年数が古い等の問題があることも多いです。しかし当社で提供する民泊マンションは、恵比寿でも指折りの超ハイグレードクラスマンションとなっております。
-  br/
-  br/
-  .row.center
-    .col-sm-6
-      =image_tag 'ebisu5.webp', width:"100%", class: 'center'
-    .col-sm-6
-      =image_tag 'ebisu6.webp', width:"100%", class: 'center'
-br
-hr.line
-br
+      | 『Office Coffee』
+    | のよくある質問
+ br/
+ br/
+ .cp_qa
+  .cp_actab.left
+    input#cp_tabfour028[type="checkbox" name="tabs"]
+    label[for="cp_tabfour028"]
+      h4 全く飲料を飲まない月がありますが、配送を停止できますか？
+    .cp_actab-content
+      p
+        | 飲料を全く飲まない月があり、配送が不要な場合、毎年１回のみ配送停止を行うことができます。その際、費用の発生はございません。ただし、契約期間を1ヶ月延長させていただきます。
 
-/# inquiry image
-.row
-  .col-sm-12.center
-    =link_to "/estimates/new", :target=>["_blank"]   do
-      =image_tag 'click3.webp', width: '70%', class: 'center'
+  .cp_actab.left
+    input#cp_tabfour029[type="checkbox" name="tabs"]
+    label[for="cp_tabfour029"]
+      h4 契約期間を終了したあとはどうなりますか？
+    .cp_actab-content
+      p
+        | 契約終了後も自動更新によりサービスを継続いただくことができます。サービス終了をご希望される場合、当社までレンタル機器のご返却をお願いしております。
 
-br
-hr.line
-br
+  .cp_actab.left
+    input#cp_tabfour030[type="checkbox" name="tabs"]
+    label[for="cp_tabfour030"]
+      h4 機械が故障してしまった場合の対応はどうなりますか？
+    .cp_actab-content
+      p
+        | 機械が故障してしまった場合、当社で予備の機械と交換をさせていただきます。ただし、予備品の発注までにお時間をいただく場合がございます。また、外的要因による故障の場合、費用を頂戴する場合がございます。
 
+  .cp_actab.left
+    input#cp_tabfour033[type="checkbox" name="tabs"]
+    label[for="cp_tabfour033"]
+      h4 ラテを飲むための牛乳は自身で購入する必要がありますか？
+    .cp_actab-content
+      p
+        | はい。乳製品については期限や衛生面の範囲がございますので、当社では取り扱いしておりませんので、企業様での購入をお願いしております。
 
-.top-wrapper
-  h2.heading
+  .cp_actab.left
+    input#cp_tabfour035[type="checkbox" name="tabs"]
+    label[for="cp_tabfour035"]
+      h4 支払い方法は？
+    .cp_actab-content
+      p
+        | 毎月のお支払いはクレジットカードもしくは口座振替にて対応させていただいております。
+
+.section.top-wrapper
+ h2.heading
     strong
-      | 宿泊料金案内
-  br
-  br
-  br/
-  table.list.responsive-table.center
-     tr
-      th.company-cell 通常時期１泊費用
-     tr 
-      td.responsive-cel.red 1日#{number_to_currency(PriceCalculator::NORMAL_PRICE_PER_NIGHT, unit: '¥', precision: 0)}
-     tr
-      th.company-cell 繁忙時期１泊費用
-     tr 
-      td.responsive-cel.red 1日#{number_to_currency(PriceCalculator::PEAK_PRICE_PER_NIGHT, unit: '¥', precision: 0)}
-     tr
-      th.company-cell 初回清掃費用等
-     tr 
-      td.responsive-cel.red 初回のみ#{number_to_currency(PriceCalculator::INITIAL_COST, unit: '¥', precision: 0)}
-     tr
-      th.company-cell 最低宿泊日数
-     tr 
-      td.responsive-cel.red #{PriceCalculator::MINIMUM_NIGHTS}泊〜
-br
-hr.line
-br/
+      | 『Office Coffee』
+    | のご利用レビュー
+
+ .review-slider
+  .plan-slider
+    .plan-card
+      h3 テレアポ会社様
+      = image_tag "review1.webp", class: 'block-image'
+      .text オフィスで常に話しているため、スタッフからも希望があり、コーヒーの設置をすることになりました。福利厚生での設置でしたが、スタッフからの評判も良好です。
+
+    .plan-card
+      h3 不動産会社様
+      = image_tag "review2.webp", class: 'block-image'
+      .text 来店したお客様へのコーヒー提供をしたく導入しました。一杯の料金もリーズナブルで、かつ手軽にご利用できるので今後も継続して依頼していきたいです。
+
+    .plan-card
+      h3 ショッピングセンター様
+      = image_tag "review3.webp", class: 'block-image'
+      .text ショッピングモールの待合スペースに複数の設置を行いました。施設自体の売上の確保も出来ましたし、お客様のリラックススペースも充実させることができました。
 
 
-.top-wrapper
-  h2.heading
+.section.top-wrapper
+ h2.heading
     strong
-      | 設備・付属について
-  br/
-  br/
-  table.list.responsive-table.center
-      tr
-       th.company-cell 設備
-       td.responsive-cel
-        | 鉄筋コンクリート造/築5年以内/オートロック/エレベータ/バルコニー/バストイレ/室内洗濯機置場/バス有/浴室乾燥機/給湯追い焚き有/IHコンロ有/TV/エアコン/乾燥機付き洗濯機/冷蔵庫/セミダブルベッド/恵比寿駅10分以内
-
-      tr
-       th.company-cell アメニティ
-       td.responsive-cel
-        | シャンプー/リンス/ボディソープ/ティッシュペーパー（2箱）/トイレットペーパー（5個）/歯ブラシ（2本）/バスタオル/タオル/掃除用品一式/フライパン/カトラリー一式/その他調理備品各種/一部調味料/
-
-br
-hr.line
-br
-br
-br
-
-.row
-  .col-sm-12.push
-   span
-     | \ カンタン60秒入力! /
-   = link_to "/estimates/new" do
-     =image_tag 'click3.webp', width: '70%', class: 'center', alt:"自動販売機の一括見積もり『自動販売機ねっと』をご利用ならこちらをクリック。簡単60秒で無料で自動販売機を一括比較見積もり"
-
-br
-hr.line
-br
-br
-
-
-.top-wrapper
-  h2.heading
-    strong
-      | ご利用レビューのご紹介
-  br/
-  br/
-  .row.center
-    .col-sm-12.review-image
-      =image_tag 'review.webp', width:"60%", class: 'center'
-br
-hr.line
-br
-br
-br
-
-.row
-  .col-sm-12.push
-   span
-     | \ カンタン60秒入力! /
-   = link_to "/estimates/new" do
-     =image_tag 'click3.webp', width: '70%', class: 'center', alt:"自動販売機の一括見積もり『自動販売機ねっと』をご利用ならこちらをクリック。簡単60秒で無料で自動販売機を一括比較見積もり"
-
-br
-hr.line
-br
-br
-
-.top-wrapper
-  h2.heading
-    strong
-      | お申し込みの流れ
-
-br
-br
-
-ul.flow.center
+      | 『オフィスコーヒー』
+    | 導入フロー
+ br/
+ ul.flow.center
   li
     dl
       dt
         span.icon
           | STEP.01
-        | ご利用日時・人数の決定
+        | お申し込み
       dd.center
-        | まずは下記よりお問い合わせをお願いします。
+        | まずは下記フォーム入力よりお申し込みをお願いします。
         br
-        | 空き状況を確認し通知を差し上げます。
+        | まだ導入したい内容が決まっていない場合、弊社設置担当よりご案内も可能です。
   li
     dl
       dt
         span.icon
           | STEP.02
-        | 決済のご案内
+        | ご契約・機器の確保
       dd.center
-        | 決済URLをお送り致しますのでご対応くださいませ。
+        | お申し込み内容に相違がなければご契約に進ませていただきます。
         br
-        | 後払い決済及びクレジットカード払いが可能となります。
+        | レンタル機器についての確保を行い、配送予定日をお知らせします。
   li
     dl
       dt
         span.icon
           | STEP.03
-        | 宿泊開始
+        | 定期配送・ご利用開始
       dd.center
-        | 宿泊前日に鍵の施錠方法と入室方法をご案内させていただきます。
-        br
-        | ご不明点がございましたらLINEやWhatsAPPでもサポート致します。
-br
-hr.line
-br
-br
-br
+        | 定期配送がスタートしましたらサービスの開始となります。
+        br/
+        | 不明点があれば、お気軽にお問い合わせくださいませ。
 
-.row
-  .col-sm-12.push
-   span
-     | \ カンタン60秒入力! /
-   = link_to "/estimates/new" do
-     =image_tag 'click3.webp', width: '70%', class: 'center', alt:"自動販売機の一括見積もり『自動販売機ねっと』をご利用ならこちらをクリック。簡単60秒で無料で自動販売機を一括比較見積もり"
+
+
+/# inquiry image
+.section.row
+  .col-sm-12.center
+    = link_to "無料で設置を申し込む", "/estimates/new", class:"btn btn-brown mt-3"

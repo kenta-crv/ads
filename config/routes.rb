@@ -11,7 +11,31 @@ Rails.application.routes.draw do
   get "/monthly" => 'top#monthly'
   get "/weekly" => 'top#weekly'
   
+  # クライアントアカウント
+  devise_for :clients, controllers: {
+    registrations: 'clients/registrations',
+    sessions: 'clients/sessions',
+    passwords: 'clients/passwords'
+  }
+  resources :clients, except: [:new, :create] do
+    resources :comments 
+    collection do
+      post :confirm
+      post :thanks
+    end
+    resources :delivers do
+      collection do
+        post :confirm
+      end
+    end
+    member do
+      post :send_mail
+      post :send_mail_start
+      get "conclusion"
+    end
+  end
 
+  
   # 管理者アカウント
   devise_for :admins, controllers: {
     registrations: 'admins/registrations',
@@ -25,28 +49,17 @@ Rails.application.routes.draw do
   get 'cancel', to: 'payments#cancel'
 
   resources :estimates do
+    resources :delivers do
+      collection do
+        post :confirm
+      end
+    end
     collection do
       post :confirm
-      #post :thanks  # フォーム送信時のPOSTを維持
-      #get :thanks   # Google広告や直接アクセス用のGETを追加
     end
   end
 
-  resources :weeks do
-    collection do
-      post :confirm
-      post :thanks  # フォーム送信時のPOSTを維持
-      get :thanks   # Google広告や直接アクセス用のGETを追加
-    end
-  end
 
-  resources :months do
-    collection do
-      post :confirm
-      post :thanks  # フォーム送信時のPOSTを維持
-      get :thanks   # Google広告や直接アクセス用のGETを追加
-    end
-  end
 
   resources :contacts do
     collection do

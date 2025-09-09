@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_12_28_090315) do
+ActiveRecord::Schema.define(version: 2025_09_01_141957) do
 
   create_table "admins", force: :cascade do |t|
     t.string "user_name", default: "", null: false
@@ -33,19 +33,27 @@ ActiveRecord::Schema.define(version: 2024_12_28_090315) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.string "company"
-    t.string "name"
+    t.string "post_title"
+    t.string "representative_name"
+    t.string "contact_name"
     t.string "tel"
     t.string "address"
-    t.string "period"
+    t.string "url"
     t.string "message"
-    t.string "service"
-    t.string "contract_period"
-    t.string "unit_price"
-    t.string "maximum_hours"
-    t.string "approach_area"
-    t.string "approach_industry"
-    t.string "post_title"
-    t.string "president_name"
+    t.string "recruit_url"
+    t.string "visa"
+    t.string "business"
+    t.string "genre"
+    t.string "salary"
+    t.string "work_time"
+    t.string "day_off"
+    t.string "work_contents"
+    t.string "number"
+    t.string "house_agents"
+    t.string "house_support"
+    t.string "remarks"
+    t.string "plan"
+    t.string "total_price"
     t.string "agree"
     t.string "contract_date"
     t.datetime "created_at", null: false
@@ -75,13 +83,16 @@ ActiveRecord::Schema.define(version: 2024_12_28_090315) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "contracts", force: :cascade do |t|
-    t.string "name"
-    t.string "tel"
-    t.string "email"
-    t.string "messages"
+  create_table "delivers", force: :cascade do |t|
+    t.integer "client_id", null: false
+    t.string "title", null: false
+    t.string "image"
+    t.text "body"
+    t.integer "count", default: 0
+    t.datetime "reservation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_delivers_on_client_id"
   end
 
   create_table "estimates", force: :cascade do |t|
@@ -96,6 +107,9 @@ ActiveRecord::Schema.define(version: 2024_12_28_090315) do
     t.string "remarks"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "choice"
+    t.string "company"
+    t.string "url"
   end
 
   create_table "months", force: :cascade do |t|
@@ -110,16 +124,6 @@ ActiveRecord::Schema.define(version: 2024_12_28_090315) do
     t.string "remarks"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "offers", force: :cascade do |t|
-    t.integer "client_id"
-    t.integer "user_id"
-    t.text "message"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["client_id"], name: "index_offers_on_client_id"
-    t.index ["user_id"], name: "index_offers_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

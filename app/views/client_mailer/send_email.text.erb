@@ -1,22 +1,17 @@
-<%= @client.company%> <%= @client.name%>様
+<%= @client.company%> <%= @client.contact_name%>様
 
-この度はテレマッチにお問い合わせ頂きありがとうございました。
+この度は___________にお問い合わせ頂きありがとうございました。
 
-以下の内容にて承りました。内容確認し、担当者よりご連絡差し上げます。
+本メールにてトライアルアカウントURLを付与させて頂きます。
 
-何卒よろしくお願い致します。
+よろしくお願い致します。
 
 --------------------------
-会社名: <%= @client.company%>
-担当者名: <%= @client.name%>
-電話番号: <%= @client.tel%>
-所在地: <%= @client.address%>
-メールアドレス: <%= @client.email%>
-発注予定時期: <%= @client.period %>
-要望:<%= @client.message %>
+会社名: <%= @client.company %>
+担当者: <%= @client.contact_name %>
+携帯番号: <%= @client.tel %>
+勤務所在地: <%= @client.address %>
+企業URL: <%= @client.url %>
+金額プラン: <%= @client.plan %>
+ログインアドレス: <%= @client.email %>
 --------------------------
-
-株式会社Ri-Plus
-フリーランスアポインターと企業のマッチング『テレマッチ』
-東京都中央区銀座6-13-16 ヒューリック銀座ウォールビル7F
-https://ri-plus.jp/

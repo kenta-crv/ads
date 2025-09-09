@@ -5,14 +5,31 @@ html
   header
       .row
         .col-xs-2
-            /=image_tag "rogo.webp", width: "220px", class:"header-image", alt:"株式会社Ri-Plus『アポ匠ロゴ』"
-        .col-xs-6
-        .col-xs-4
+          -if request.path == "/zero"
+           = link_to "/zero"
+            =image_tag "rogo2.webp", width: "220px", class:"header-image", alt:"株式会社Ri-Plus『アポ匠ロゴ』"
+          -elsif request.path == "/free"
+           = link_to "/feee"
+            =image_tag "rogo3.webp", width: "220px", class:"header-image", alt:"株式会社Ri-Plus『アポ匠ロゴ』"
+          -else
+           = link_to "/"
+            =image_tag "rogo.webp", width: "220px", class:"header-image", alt:"株式会社Ri-Plus『アポ匠ロゴ』"
+        .col-xs-8
+        .col-xs-2.set-devise
+            - if admin_signed_in?
+              = link_to "管理者マイページ", admin_path(current_admin), class: "btn btn-primary"
+            /- if user_signed_in?
+              = link_to "ユーザーマイページ", user_path(current_user), class: "btn btn-primary"
+            - if client_signed_in?
+              = link_to "企業様マイページ", client_path(current_client), class: "btn btn-primary"
       .row.navi
-       .col-xs-12.text-right
-           = link_to "日本語", "/", class:"btn btn-default"
-           = link_to "ENGLISH", "/index_en", class:"btn btn-default"
-           = link_to "お問い合わせ", "/contacts/new", class:"btn btn-default"
+       .col-xs-12.center
+           br/
+           br/
+           p.notice
+            = notice
+           p.alert
+            = alert
   body
     main
       .bread

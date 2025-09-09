@@ -1,0 +1,26 @@
+br
+ .tops-wrapper
+    h2.headline
+       | トライアルプランにお申し込みいただきありがとうございます。
+    p.center 
+     | 下記よりクレジット情報を登録にお進みください。（無料期間の間に解約頂ければ費用は発生しません。）
+
+       | ご利用ありがとうございます。以下より決済を実行しお申し込みが完了となります。
+    = form_with url: checkout_path(client_id: @client.id), method: :post, local: true do
+      = submit_tag '決済', class: 'btn btn-primary'
+
+ .center
+  = link_to "トップページへ戻る", "/", class:"btn btn-primary"
+br
+br
+
+
+
+script[async src="https://www.googletagmanager.com/gtag/js?id=AW-10998015402"]
+script
+  |  window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-10998015402');
+script
+  |  gtag('event', 'conversion', {'send_to': 'AW-10998015402/TzzVCIjG_qQDEIzyn5cC'});
+
+javascript:
+  fbq('track', 'Lead');

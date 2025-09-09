@@ -1,0 +1,51 @@
+= form_for([@client, @deliver], url: confirm_client_delivers_path(@client)) do |f|
+ .company-wrapper
+  table.company.responsive-table
+    colgroup
+      col.col-1
+      col.col-2
+      col.col-3
+    tbody
+      tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
+          | タイトル
+        td.responsive-cell
+          .input-container
+            = f.text_field :title, placeholder: "例: 2025年1月1日新年のご報告キャンペーン"
+      tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
+          | メイン表示画像
+        td.responsive-cell
+          .input-container
+            = f.file_field :image
+      tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
+          | 配信条件の設置
+        td.responsive-cell
+          .input-container
+      tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
+          | 本文
+        td.responsive-cell
+          .input-container
+            = f.text_field :body, placeholder: "例: 新年明けましておめでとうございます。〜〜〜"
+      tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
+          | 配信日時
+        td.responsive-cell
+          .input-container
+            = f.datetime_field :reservation
+      tr
+        td colspan="3"
+          .center
+            = f.submit "確認画面 (Confirmation Screen)", class: "btn btn-primary"

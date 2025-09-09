@@ -1,0 +1,98 @@
+- set_meta_tags noindex: true
+.tops-wrapper
+
+  h2.headline
+    | 求人申込フォーム
+  = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+    = devise_error_messages!
+    table.company
+      colgroup
+      tbody
+        tr
+          td.label-cell
+            strong.label 必須
+          td.arrow-box-cell
+            | 会社名
+          td.responsive-cell
+            .input-container
+              = f.text_field :company, placeholder: "株式会社ABC"
+
+        tr
+          td.label-cell
+            strong.label 必須
+          td.arrow-box-cell
+            | 担当者
+          td.responsive-cell
+            .input-container
+              = f.text_field :contact_name, placeholder: "鈴木　次郎"
+
+        tr
+          td.label-cell
+            strong.label 必須
+          td.arrow-box-cell
+            | 携帯番号
+          td.responsive-cell
+            .input-container
+              = f.text_field :tel, placeholder: "080-0000-0000"
+
+        tr
+          td.label-cell
+            strong.label 必須
+          td.arrow-box-cell
+            | 勤務所在地
+          td.responsive-cell
+            .input-container
+              = f.text_field :address, placeholder: "東京都東京市東京町1-1-1"
+
+        tr
+          td.label-cell
+            strong.label 必須
+          td.arrow-box-cell
+            | 企業URL
+          td.responsive-cell
+            .input-container
+              = f.text_field :url, placeholder: "https://abc.com"
+
+      tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
+          | プランの選択
+        td.responsive-cell
+          .input-container
+            = f.select :plan, [['無料プラン (0円)', 0], ['スタンダード (59,800円)', 59800], ['プレミアム (98,000円)', 98000]], {}, class: 'form-control'
+
+      tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
+          | ログインアドレス
+        td.responsive-cell
+         .input-container
+          = f.email_field :email, autocomplete: "email"
+      tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
+          | パスワード
+        td.responsive-cell
+         .input-container
+          - if @minimum_password_length
+            em
+              | (
+              = @minimum_password_length
+              |  characters minimum)
+          = f.password_field :password, autocomplete: "off"
+      tr
+        td.label-cell
+          strong.label 必須
+        td.arrow-box-cell
+          | パスワード
+        td.responsive-cell
+         .input-container
+          = f.password_field :password_confirmation, autocomplete: "off"
+
+      tr
+        td[colspan="3"]
+          = f.submit "登録", class: "btn btn-primary", data: { confirm: "送信してもよろしいですか？" }
+

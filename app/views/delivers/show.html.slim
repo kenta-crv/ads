@@ -1,0 +1,100 @@
+.tops-wrapper
+ br/
+ br/
+ .row 
+  .col-lg-7
+    h2.headline 
+      = @deliver.title
+    table[width="90%"]
+     tbody
+      tr
+        th.arrow_box フロントトーク
+      tr
+        td.center  = @deliver.front_talk
+      tr
+        th.arrow_box フロントトーク
+      tr
+        td.center  = @deliver.first_talk
+      tr
+        th.arrow_box イントロダクション
+      tr
+        td.center  = @deliver.introduction
+      tr
+        th.arrow_box ヒアリング①
+      tr
+        td.center  = @deliver.hearing_1
+      tr
+        th.arrow_box ヒアリング②
+      tr
+        td.center  = @deliver.hearing_2
+      tr
+        th.arrow_box ヒアリング③
+      tr
+        td.center  = @deliver.hearing_3
+      tr
+        th.arrow_box クロージング
+      tr
+        td.center  = @deliver.closing
+  .col-lg-5
+    h2.headline 
+      | 切り返しトーク
+    table[width="90%"]
+     tbody
+      tr
+        th.arrow_box = @deliver.requirement_title
+      tr
+        td.center  = @deliver.requirement
+      tr
+        th.arrow_box = @deliver.price_title
+      tr
+        td.center  = @deliver.price
+      tr
+        th.arrow_box = @deliver.experience_title
+      tr
+        td.center  = @deliver.experience
+      tr
+        th.arrow_box = @deliver.refund_title
+      tr
+        td.center  = @deliver.refund
+      tr
+        th.arrow_box = @deliver.usp_title
+      tr
+        td.center  = @deliver.usp
+      tr
+        th.arrow_box  = @deliver.other_receive_1_title
+      tr
+        td.center  = @deliver.other_receive_1
+      tr
+        th.arrow_box = @deliver.other_receive_2_title
+      tr
+        td.center  = @deliver.other_receive_2
+      tr
+        th.arrow_box = @deliver.other_receive_3_title
+      tr
+        td.center  = @deliver.other_receive_3
+ h2.headline 
+  | 企業情報
+ table[width="90%"]
+     tbody
+      col[width="20%"]
+      col[width="30%"]
+      col[width="20%"]
+      col[width="30%"]
+      tr
+        th.arrow_box 会社名
+        td.center = @deliver.company
+        th.arrow_box 担当者名
+        td.center = @deliver.name
+      tr
+        th.arrow_box 電話番号
+        td.center = @deliver.tel
+        th.arrow_box 住所
+        td.center = @deliver.address
+      tr
+        th.arrow_box 備考
+        td[colspan="3"]
+         = @deliver.remarks
+
+         br/
+
+         

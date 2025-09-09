@@ -1,7 +1,0 @@
-- set_meta_tags noindex: true
-
-.tops-wrapper
-br
-  h2.headline 宿泊申請フォーム（※最低30泊以上）
-  = form_for @month, url: confirm_months_path(@month) do |f|
-    = render 'form', f: f, btn_name: "確認画面 (Confirmation Screen)"

@@ -1,0 +1,132 @@
+br/
+- if @client.agree.blank?
+ .tops-wrapper
+  h2.headline
+    | 契約同意へお進みください。
+  .actions_container style="text-align: center; margin-bottom: 30px;"
+   = link_to "契約へ進む", conclusion_client_path(@client), class: "btn btn-primary"
+   = form_with url: checkout_path(client_id: @client.id), method: :post, local: true do
+    = submit_tag '決済 (Make Payment)', class: 'btn btn-primary'
+   = link_to '新規配信', new_client_deliver_path(@client), class: "btn btn-success"
+.tops-wrapper
+  h2.headline
+    | クライアントアカウント情報
+  br
+  table.company
+      tr
+        td.label-cell
+          | ログインアドレス
+        td
+          = @client.email
+      tr
+        td.label-cell
+          | パスワード
+        td
+          | *********
+  .center 
+   = link_to '編集する', edit_client_registration_path, class: 'btn btn-primary'
+   = link_to "ログアウト", destroy_client_session_path, method: :delete, class:"btn btn-danger"
+br/
+br/
+
+
+h2.headline 
+ |求人申込内容の確認 
+ = link_to "編集", edit_client_path(@client), class: "btn btn-primary"
+table.company
+  tbody
+    tr
+      td.label-cell 会社名
+      td= @client.company
+
+    tr
+      td.label-cell 担当者
+      td= @client.contact_name
+
+    tr
+      td.label-cell 携帯番号
+      td= @client.tel
+
+    tr
+      td.label-cell メールアドレス
+      td= @client.email
+
+    tr
+      td.label-cell 勤務所在地
+      td= @client.address
+
+    tr
+      td.label-cell 企業URL
+      td= @client.url
+
+    tr
+      td.label-cell 現在のプラン
+      td= @client.plan
+
+
+br/
+table width="90%"
+  - if @delivers.any?
+    - @delivers.each do |deliver|
+      tr
+        th
+          = link_to deliver.title, client_deliver_path(@client, deliver)  
+        td.center
+          = link_to '編集', edit_client_deliver_path(@client, deliver), class: 'btn btn-success'
+          = link_to '削除', client_deliver_path(@client, deliver), method: :delete, class: 'btn btn-danger', data: { confirm: '本当に削除しますか？' }
+  - else
+    tr
+      td[colspan="2"]
+        | 配信情報はまだ登録されていません。
+
+
+
+
+- if admin_signed_in?
+ .center 
+  = link_to "削除する", client_path(@client), class: "btn btn-danger", method: :delete, data: { confirm: '本当に削除しますか？' }, style: "margin-left: 10px;"
+  = link_to "一覧に戻る", clients_path, class: "btn btn-default"
+ br/
+ br/
+ = form_for [@client, @client.comments.build] do |f|
+  table.company[width="100%"]
+    col[width="25%"]
+    col[width="25%"]
+    col[width="25%"]
+    tbody
+      tr
+        th ステータス
+        th 次回営業日
+        th コメント
+      tr
+        td
+          = f.select(:status, [\
+            ["商談","商談"], \
+            ["見込低","見込低"],\
+            ["見込中","見込中"],\
+            ["見込高","見込高"],\
+            ["契約","契約"],\
+            ["NG","NG"]\
+          ], include_blank: "選択してください")
+        td = f.datetime_field :next
+        td = f.text_area :body
+      tr
+        th[colspan="3"]
+          .center
+            = f.submit "登録する", class:"btn btn-primary"
+
+ table.company[width="100%"]
+  - if @client.comments.any?
+    tbody
+      - @client.comments.each do |comment|
+        - if comment.persisted?  # ← 保存済みだけリンクを出す
+          tr
+            td = comment.status
+            td = comment.next
+            td = comment.body
+            td
+              = link_to "編集", edit_client_comment_path(@client, comment), target: "_blank", class: "btn btn-primary"
+              = link_to '削除', client_comment_path(@client, comment),
+                  method: :delete,
+                  class: 'btn btn-danger',
+                  data: { confirm: '削除しますか？' }

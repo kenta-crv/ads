@@ -9,36 +9,29 @@ class EstimatesController < ApplicationController
     @estimate = Estimate.new
   end
 
-  def confirm
-    @estimate = Estimate.new(estimate_params)
-  
-    check_in_date = @estimate.check_in_date.to_date
-    check_out_date = @estimate.check_out_date.to_date
-  
-    result = PriceCalculator.calculate_total_price(check_in_date, check_out_date)
-  
-    if result[:error]
-      flash[:error] = result[:error]
-      render :new and return
-    end
-  
-    @num_normal_days = result[:normal_days]
-    @num_peak_days = result[:peak_days]
-    @total_price = result[:total_price]
-    @normal_price_per_night = result[:normal_price_per_night]
-    @peak_price_per_night = result[:peak_price_per_night]
-    @initial_cost = result[:initial_cost] # 初期費用
-  
-    if @estimate.save # **ここで保存**
-      # **保存成功後にメール送信**
-      EstimateMailer.received_email(@estimate).deliver
-      EstimateMailer.send_email(@estimate).deliver
-  
-      render :confirm
-    else
-      render :new
-    end
+def confirm
+  @estimate = Estimate.new(estimate_params)
+
+  # choice を使って金額算出
+  result = PriceCalculator.calculate_total_price(@estimate.choice)
+
+  if result[:error]
+    flash[:error] = result[:error]
+    render :new and return
   end
+
+  @total_price = result[:total_price]
+
+  if @estimate.save
+    # メール送信（必要なら）
+    EstimateMailer.received_email(@estimate).deliver
+    EstimateMailer.send_email(@estimate).deliver
+
+    render :confirm
+  else
+    render :new
+  end
+end
   
   def create
     @estimate = Estimate.new(estimate_params)
@@ -66,6 +59,7 @@ class EstimatesController < ApplicationController
 
   def show
     @estimate = Estimate.find_by(id: params[:id])
+    @delivers = @estimate.delivers
   end
 
 
@@ -92,12 +86,14 @@ class EstimatesController < ApplicationController
   
   def estimate_params
     params.require(:estimate).permit(
+      :company,  #会社名
       :name,  #名前
       :tel, #電話番号
       :email, #メールアドレス
-      :postnumber, #郵便番号
       :address, #住所
+      :url, #URL
       :people, #屋内の場合、使用が想定される人数
+      :choice, #設置箇所
       :check_in_date, #設置箇所
       :check_out_date,
       :remarks #要望
