@@ -36,10 +36,23 @@ gem 'jbuilder', '~> 2.5'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
+# Gemfile
+gem 'webpush'                # send Web Push (VAPID + encryption)
+gem 'serviceworker-rails'    # serve serviceworker.js & manifest via asset pipeline
+gem 'sidekiq', '~> 6.5'      # background worker (6.x works with Rails 5) 
+gem 'sidekiq-scheduler'      # cron/scheduler for sidekiq (optional)
+gem 'redis'                  # Sidekiq needs Redis
+gem 'rails_admin'            # quick admin UI (or use activeadmin)
+
+gem 'webpush'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rspec-rails'
+  gem 'webmock'
 end
+
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.

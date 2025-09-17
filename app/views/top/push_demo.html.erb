@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Push Notifications Demo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      line-height: 1.6;
+      background: #f5f5f5;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .status {
+      background: #e8f5e8;
+      padding: 15px;
+      border-radius: 5px;
+      margin: 20px 0;
+      border-left: 4px solid #4caf50;
+      font-weight: bold;
+    }
+    .instructions {
+      background: #f0f8ff;
+      padding: 20px;
+      border-radius: 5px;
+      margin: 20px 0;
+      border-left: 4px solid #2196f3;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 10px 5px;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    button:disabled {
+      background: #6c757d;
+      cursor: not-allowed;
+    }
+    .demo-buttons {
+      text-align: center;
+      margin: 30px 0;
+    }
+    .success {
+      color: #28a745;
+    }
+    .error {
+      color: #dc3545;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔔 Push Notifications Demo</h1>
+    
+    <div class="status">
+      <div id="status">Loading...</div>
+    </div>
+
+    <div class="instructions">
+      <h3>📋 How it works:</h3>
+      <ol>
+        <li><strong>Enable Notifications:</strong> Click "Allow" when prompted</li>
+        <li><strong>Send Test:</strong> Use the button below to test notifications</li>
+        <li><strong>Integrate:</strong> Add the script tag to any website</li>
+      </ol>
+    </div>
+
+    <div class="demo-buttons">
+      <button id="subscribe-btn" onclick="enableNotifications()">
+        🔔 Enable Push Notifications
+      </button>
+      <button id="test-btn" onclick="sendTestNotification()" disabled>
+        📤 Send Test Notification
+      </button>
+    </div>
+
+    <div class="instructions">
+      <h3>🚀 Integration Code:</h3>
+      <p>Add this single line to any website:</p>
+      <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; font-family: monospace; font-size: 14px; overflow-x: auto; margin: 10px 0;">
+&lt;script src="http://localhost:3000/api/v1/embed.js"&gt;&lt;/script&gt;
+      </div>
+      <p><small>Visitors will be automatically prompted to allow notifications when they visit the site.</small></p>
+    </div>
+  </div>
+
+  <!-- Load the embed script -->
+  <script src="/api/v1/embed.js"></script>
+  
+  <script>
+    let isSubscribed = false;
+
+    function enableNotifications() {
+      // Force enable the test button since embed.js should have subscribed
+      console.log('Manually enabling notifications...');
+      
+      // Check if we already have a subscription
+      if ('serviceWorker' in navigator && 'PushManager' in window) {
+        navigator.serviceWorker.ready.then(function(registration) {
+          registration.pushManager.getSubscription().then(function(subscription) {
+            if (subscription) {
+              // We have a subscription, enable the test button
+              document.getElementById('status').innerHTML = 
+                '<span class="success">✅ Notifications enabled! Ready to send push notifications.</span>';
+              document.getElementById('subscribe-btn').textContent = '✅ Notifications Enabled';
+              document.getElementById('subscribe-btn').disabled = true;
+              document.getElementById('test-btn').disabled = false;
+              isSubscribed = true;
+              console.log('Subscription found, buttons updated');
+            } else {
+              // No subscription, request permission and force reload
+              Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                  // Reload to trigger fresh subscription
+                  window.location.reload();
+                }
+              });
+            }
+          });
+        });
+      }
+    }
+
+    function sendTestNotification() {
+      if (!isSubscribed) {
+        document.getElementById('status').innerHTML = '<span class="error">❌ Please enable notifications first!</span>';
+        return;
+      }
+
+      document.getElementById('status').innerHTML = '⏳ Sending notification...';
+      console.log('Sending notification to:', '/api/v1/notifications');
+
+      fetch('/api/v1/notifications', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: 'Test Notification 🎉',
+          body: 'Your push notification system is working perfectly!',
+          url: window.location.href
+        })
+      })
+      .then(response => {
+        console.log('Response status:', response.status);
+        console.log('Response ok:', response.ok);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Success response:', data);
+        document.getElementById('status').innerHTML = 
+          `<span class="success">✅ Notification sent! Delivered to ${data.delivered} out of ${data.total} subscribers.</span>`;
+      })
+      .catch(error => {
+        console.error('Detailed error:', error);
+        document.getElementById('status').innerHTML = 
+          `<span class="error">❌ Failed to send notification: ${error.message}</span>`;
+        
+        // Try to give more helpful error info
+        if (error.message.includes('Failed to fetch')) {
+          document.getElementById('status').innerHTML += 
+            '<br><small>Network error - check if Rails server is running</small>';
+        }
+      });
+    }
+
+    function forceEnableTest() {
+      // Force enable the test button regardless of detection
+      console.log('Force enabling test button...');
+      
+      document.getElementById('status').innerHTML = 
+        '<span class="success">✅ Test button force-enabled! You can now send notifications.</span>';
+      document.getElementById('subscribe-btn').textContent = '✅ Notifications Enabled';
+      document.getElementById('subscribe-btn').disabled = true;
+      document.getElementById('test-btn').disabled = false;
+      isSubscribed = true;
+      
+      console.log('Test button force-enabled');
+    }
+
+    function updateStatus() {
+      if ('serviceWorker' in navigator && 'PushManager' in window) {
+        navigator.serviceWorker.ready.then(function(registration) {
+          registration.pushManager.getSubscription().then(function(subscription) {
+            if (subscription) {
+              document.getElementById('status').innerHTML = 
+                '<span class="success">✅ Notifications enabled! Ready to send push notifications.</span>';
+              document.getElementById('subscribe-btn').textContent = '✅ Notifications Enabled';
+              document.getElementById('subscribe-btn').disabled = true;
+              document.getElementById('test-btn').disabled = false;
+              isSubscribed = true;
+            } else {
+              document.getElementById('status').innerHTML = 
+                '❌ Click "Enable Push Notifications" to get started.';
+              document.getElementById('subscribe-btn').disabled = false;
+              document.getElementById('test-btn').disabled = true;
+              isSubscribed = false;
+            }
+          }).catch(error => {
+            console.error('Error checking subscription:', error);
+            document.getElementById('status').innerHTML = 
+              '❌ Click "Enable Push Notifications" to get started.';
+          });
+        }).catch(error => {
+          console.error('Service worker not ready:', error);
+          document.getElementById('status').innerHTML = 
+            '<span class="error">❌ Service worker not available.</span>';
+        });
+      } else {
+        document.getElementById('status').innerHTML = 
+          '<span class="error">❌ Your browser does not support push notifications.</span>';
+      }
+    }
+
+    // Update status when page loads and periodically check
+    setTimeout(updateStatus, 500);
+    setTimeout(updateStatus, 2000); // Check again after embed.js completes
+    setTimeout(updateStatus, 4000); // And once more to be sure
+
+    // Listen for service worker messages
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.addEventListener('message', function(event) {
+        if (event.data.type === 'NOTIFICATION_SHOWN') {
+          updateStatus();
+        }
+      });
+    }
+
+    // Also listen for when embed.js completes subscription
+    window.addEventListener('message', function(event) {
+      if (event.data && event.data.type === 'SUBSCRIPTION_COMPLETE') {
+        updateStatus();
+      }
+    });
+
+    // Manual refresh of status every few seconds
+    setInterval(updateStatus, 3000);
+  </script>
+</body>
+</html>
