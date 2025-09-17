@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   
   get "/monthly" => 'top#monthly'
   get "/weekly" => 'top#weekly'
+  get "/test_push" => 'top#test_push'
+  get "/push_demo" => 'top#push_demo'
   
   # クライアントアカウント
   devise_for :clients, controllers: {
@@ -65,6 +67,14 @@ Rails.application.routes.draw do
     collection do
       post :confirm
       post :thanks
+    end
+  end
+
+  namespace :api do
+    namespace :v1 do
+      resources :subscribers, only: [:create]
+      resources :notifications, only: [:create]
+      get "embed.js", to: "embed#show"
     end
   end
 

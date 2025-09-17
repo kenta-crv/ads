@@ -58,6 +58,14 @@ class TopController < ApplicationController
     end
   end  
 
+  def test_push
+    render layout: false
+  end
+
+  def push_demo
+    render layout: false
+  end
+
   def redirect
     line_url = "https://page.line.me/522jmsbm"
     render inline: <<-HTML

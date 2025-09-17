@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Push Notification Test</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    .container {
+      background: #f4f4f4;
+      padding: 30px;
+      border-radius: 10px;
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+    .status {
+      background: #e8f5e8;
+      padding: 15px;
+      border-radius: 5px;
+      margin: 20px 0;
+      border-left: 4px solid #4caf50;
+    }
+    .instructions {
+      background: #fff3cd;
+      padding: 15px;
+      border-radius: 5px;
+      margin: 20px 0;
+      border-left: 4px solid #ffc107;
+    }
+    .code {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 5px;
+      font-family: monospace;
+      font-size: 14px;
+      overflow-x: auto;
+      margin: 10px 0;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 10px 5px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .disabled {
+      background: #6c757d !important;
+      cursor: not-allowed !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔔 Push Notification Test</h1>
+    
+    <div class="status">
+      <h3>Status</h3>
+      <p id="status">Loading...</p>
+    </div>
+
+    <div class="instructions">
+      <h3>📋 Testing Instructions</h3>
+      <ol>
+        <li><strong>Accept Permission:</strong> Click "Allow" when prompted for notifications</li>
+        <li><strong>Check Subscription:</strong> You should see "Subscribed successfully" below</li>
+        <li><strong>For Best Results:</strong> Minimize or switch to another tab/window before sending notification</li>
+        <li><strong>Send Test Notification:</strong> Use the cURL command below or click the test button</li>
+        <li><strong>Verify Notification:</strong> You should see a desktop notification appear</li>
+      </ol>
+      
+      <div style="background: #e7f3ff; padding: 10px; border-radius: 5px; margin: 10px 0;">
+        <strong>💡 Pro Tip:</strong> Browser notifications typically only show when the page is not focused. Try:
+        <ul>
+          <li>Switch to another tab or window</li>
+          <li>Minimize the browser</li>
+          <li>Then send the notification</li>
+        </ul>
+      </div>
+      
+      <div style="background: #fff3cd; padding: 15px; border-radius: 5px; margin: 10px 0; border-left: 4px solid #ffc107;">
+        <strong>⚠️ SERVICE WORKER CACHE ISSUE:</strong> If you see "tag: 'notification-..." in console:
+        <ol>
+          <li><strong>FIRST:</strong> Click "🔄 Force Service Worker Update" button below</li>
+          <li><strong>THEN:</strong> Wait for page to reload automatically</li>
+          <li><strong>AFTER:</strong> Console should show "Service Worker Version: v1.0.2"</li>
+          <li><strong>FINALLY:</strong> Test notifications again</li>
+        </ol>
+      </div>
+    </div>
+
+    <div>
+      <h3>🧪 Test Buttons</h3>
+      <button id="subscribe-btn" onclick="subscribeToNotifications()">Subscribe to Notifications</button>
+      <button id="test-btn" onclick="sendTestNotification()" class="disabled" disabled>Send Test Notification (Background)</button>
+      <button onclick="sendImmediateNotification()" class="disabled" id="immediate-btn" disabled>Send Immediate Notification</button>
+      <button onclick="testServiceWorkerNotification()">🧪 Test Service Worker Notification</button>
+      <button onclick="clearPushData()">Clear Push Data & Retry</button>
+      <button onclick="forceServiceWorkerUpdate()">🔄 Force Service Worker Update</button>
+      <button onclick="hardRefreshPage()">💥 Hard Refresh (Alternative)</button>
+      <button onclick="forceNotificationPermission()">🔔 Force Notification Permission</button>
+    </div>
+
+    <div>
+      <h3>💻 Manual Testing with cURL</h3>
+      <p>Once subscribed, you can send notifications using this command:</p>
+      <div class="code">
+curl -X POST http://localhost:3000/api/v1/notifications \<br>
+&nbsp;&nbsp;-H "Content-Type: application/json" \<br>
+&nbsp;&nbsp;-d '{"title":"Hello Abid","body":"Your first push works!","url":"https://google.com"}'
+      </div>
+    </div>
+
+    <div>
+      <h3>📊 Database Check</h3>
+      <p>Check your subscribers table:</p>
+      <div class="code">
+rails console<br>
+Subscriber.count<br>
+Subscriber.last
+      </div>
+    </div>
+
+    <div>
+      <h3>🔍 Debugging Help</h3>
+      <p>If notifications aren't showing (even though service worker receives them):</p>
+      <ol>
+        <li><strong>Check Browser Notification Settings:</strong>
+          <ul>
+            <li><strong>Chrome:</strong> Settings → Privacy & Security → Site Settings → Notifications → localhost:3000 should be "Allow"</li>
+            <li><strong>Firefox:</strong> Settings → Privacy & Security → Permissions → Notifications → Check localhost:3000</li>
+            <li><strong>Edge:</strong> Settings → Site Permissions → Notifications</li>
+          </ul>
+        </li>
+        <li><strong>Try Different Focus States:</strong> Minimize browser completely, switch to another app</li>
+        <li><strong>Check OS Notification Settings:</strong> Make sure system notifications are enabled for your browser</li>
+        <li><strong>Try Different Browser:</strong> Test in Chrome/Firefox/Edge to isolate browser-specific issues</li>
+      </ol>
+      <button onclick="checkDebugging()">🔍 Run Debug Check</button>
+      <button onclick="openNotificationSettings()">⚙️ Open Notification Settings</button>
+    </div>
+  </div>
+
+  <!-- Load the embed script that will handle subscription -->
+  <script src="/api/v1/embed.js"></script>
+  
+  <script>
+    let isSubscribed = false;
+
+    // Check if we're already subscribed
+    function updateStatus() {
+      if ('serviceWorker' in navigator && 'PushManager' in window) {
+        navigator.serviceWorker.ready.then(function(registration) {
+          registration.pushManager.getSubscription().then(function(subscription) {
+            if (subscription) {
+              document.getElementById('status').textContent = '✅ Subscribed successfully! Ready to receive notifications.';
+              document.getElementById('subscribe-btn').textContent = 'Already Subscribed';
+              document.getElementById('subscribe-btn').classList.add('disabled');
+              document.getElementById('subscribe-btn').disabled = true;
+              document.getElementById('test-btn').classList.remove('disabled');
+              document.getElementById('test-btn').disabled = false;
+              document.getElementById('immediate-btn').classList.remove('disabled');
+              document.getElementById('immediate-btn').disabled = false;
+              isSubscribed = true;
+            } else {
+              document.getElementById('status').textContent = '❌ Not subscribed. Click "Subscribe to Notifications" to get started.';
+            }
+          });
+        });
+      } else {
+        document.getElementById('status').textContent = '❌ Your browser does not support push notifications.';
+      }
+    }
+
+    function subscribeToNotifications() {
+      // The embed.js script should handle this automatically
+      // This button is mainly for manual retry
+      location.reload();
+    }
+
+    async function clearPushData() {
+      if ('serviceWorker' in navigator) {
+        try {
+          const registration = await navigator.serviceWorker.ready;
+          const subscription = await registration.pushManager.getSubscription();
+          
+          if (subscription) {
+            await subscription.unsubscribe();
+            console.log('Unsubscribed from push notifications');
+          }
+          
+          // Clear service worker
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          for (let registration of registrations) {
+            await registration.unregister();
+          }
+          
+          alert('Push data cleared! The page will reload to start fresh.');
+          location.reload();
+        } catch (error) {
+          console.error('Error clearing push data:', error);
+          alert('Error clearing push data. Please manually clear browser data for this site.');
+        }
+      }
+    }
+
+    function sendTestNotification() {
+      if (!isSubscribed) {
+        document.getElementById('status').textContent = '❌ Please subscribe first!';
+        return;
+      }
+
+      // Show instructions for background testing
+      const shouldContinue = confirm(
+        'IMPORTANT: To see the actual push notification:\n\n' +
+        '1. Click OK\n' +
+        '2. Immediately minimize this window or switch to another tab\n' +
+        '3. Wait 3 seconds for the notification to appear\n\n' +
+        'Ready?'
+      );
+      
+      if (!shouldContinue) return;
+
+      document.getElementById('status').textContent = '⏳ Sending notification in 3 seconds... Please minimize this window now!';
+
+      // Give user time to minimize/switch tabs
+      setTimeout(() => {
+        fetch('/api/v1/notifications', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            title: 'Background Test 🔔',
+            body: 'Success! Your push notifications are working perfectly! 🎉',
+            url: window.location.href
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(`Background notification sent! Delivered to ${data.delivered} out of ${data.total} subscribers.`);
+          document.getElementById('status').textContent = `✅ Background notification sent! Delivered to ${data.delivered} out of ${data.total} subscribers.`;
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          document.getElementById('status').textContent = '❌ Failed to send notification. Check console for details.';
+        });
+      }, 3000); // 3 second delay to allow user to minimize
+    }
+
+    function sendImmediateNotification() {
+      if (!isSubscribed) {
+        document.getElementById('status').textContent = '❌ Please subscribe first!';
+        return;
+      }
+
+      document.getElementById('status').textContent = '⏳ Sending immediate notification...';
+
+      fetch('/api/v1/notifications', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: 'Immediate Test 🚀',
+          body: 'This notification was sent while the page is active. You may not see it as a popup due to browser behavior.',
+          url: window.location.href
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(`Immediate notification sent! Delivered to ${data.delivered} out of ${data.total} subscribers.`);
+        document.getElementById('status').textContent = `✅ Immediate notification sent! Delivered to ${data.delivered} out of ${data.total} subscribers. Check service worker console for details.`;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('status').textContent = '❌ Failed to send notification. Check console for details.';
+      });
+    }
+
+    async function checkDebugging() {
+      let debugInfo = [];
+      
+      // Check notification permission
+      const permission = Notification.permission;
+      debugInfo.push(`Notification Permission: ${permission}`);
+      
+      // Check service worker status
+      if ('serviceWorker' in navigator) {
+        try {
+          const registration = await navigator.serviceWorker.ready;
+          debugInfo.push(`Service Worker: Active (scope: ${registration.scope})`);
+          
+          const subscription = await registration.pushManager.getSubscription();
+          if (subscription) {
+            debugInfo.push(`Push Subscription: Active`);
+            debugInfo.push(`Endpoint: ${subscription.endpoint.substring(0, 50)}...`);
+          } else {
+            debugInfo.push(`Push Subscription: None`);
+          }
+          
+          // Test notification directly from page
+          if (permission === 'granted') {
+            debugInfo.push(`Testing browser notification...`);
+            try {
+              const directNotification = new Notification('🔴 CRITICAL TEST: Direct Browser Notification', {
+                body: 'If you can see this notification, the issue is with service worker notifications. If you cannot see this, the issue is browser settings.',
+                icon: '/favicon.ico',
+                requireInteraction: true
+              });
+              debugInfo.push(`✅ Direct notification created - DID YOU SEE A RED NOTIFICATION?`);
+              
+              directNotification.onclick = function() {
+                alert('Direct notification clicked! This means browser notifications work.');
+              };
+              
+            } catch (error) {
+              debugInfo.push(`❌ Direct notification failed: ${error.message}`);
+            }
+          } else {
+            debugInfo.push(`❌ Permission not granted: ${permission}`);
+          }
+          
+        } catch (error) {
+          debugInfo.push(`Service Worker Error: ${error.message}`);
+        }
+      } else {
+        debugInfo.push(`Service Worker: Not supported`);
+      }
+      
+      // Check if browser tab is focused
+      debugInfo.push(`Document Hidden: ${document.hidden}`);
+      debugInfo.push(`Page Visibility: ${document.visibilityState}`);
+      
+      // Display debug info
+      document.getElementById('status').innerHTML = 
+        '🔍 Debug Information:<br>' + debugInfo.map(info => `• ${info}`).join('<br>');
+      
+      console.log('Debug Information:', debugInfo);
+    }
+
+    async function testServiceWorkerNotification() {
+      if ('serviceWorker' in navigator) {
+        try {
+          const registration = await navigator.serviceWorker.ready;
+          
+          // Test different notification options to see what works
+          console.log('Testing direct service worker notification...');
+          
+          const result = await registration.showNotification('🟢 Direct Service Worker Test', {
+            body: 'This notification is created directly by the service worker (not via push). If you see this, service worker notifications work!',
+            icon: '/favicon.ico',
+            requireInteraction: true, // Force it to stay visible
+            silent: false,
+            vibrate: [300, 100, 300],
+            data: { test: true }
+          });
+          
+          console.log('Direct service worker notification result:', result);
+          document.getElementById('status').textContent = '✅ Direct service worker notification sent! DID YOU SEE A GREEN NOTIFICATION?';
+          
+        } catch (error) {
+          console.error('Service worker notification failed:', error);
+          document.getElementById('status').textContent = '❌ Service worker notification failed: ' + error.message;
+        }
+      } else {
+        document.getElementById('status').textContent = '❌ Service workers not supported';
+      }
+    }
+
+    function openNotificationSettings() {
+      const userAgent = navigator.userAgent.toLowerCase();
+      
+      if (userAgent.includes('chrome') && !userAgent.includes('edg')) {
+        // Chrome
+        window.open('chrome://settings/content/notifications', '_blank');
+      } else if (userAgent.includes('firefox')) {
+        // Firefox
+        window.open('about:preferences#privacy', '_blank');
+      } else if (userAgent.includes('edg')) {
+        // Edge
+        window.open('edge://settings/content/notifications', '_blank');
+      } else {
+        // Generic fallback
+        alert('Please check your browser notification settings:\n\n' +
+              '1. Look for "Notifications" in browser settings\n' +
+              '2. Make sure localhost:3000 is allowed\n' +
+              '3. Check that notifications are enabled for your browser in OS settings');
+      }
+    }
+
+    async function forceServiceWorkerUpdate() {
+      if ('serviceWorker' in navigator) {
+        try {
+          document.getElementById('status').textContent = '🔄 Forcing service worker update...';
+          
+          // Unregister all service workers
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          for (let registration of registrations) {
+            await registration.unregister();
+            console.log('Unregistered service worker:', registration.scope);
+          }
+          
+          // Clear caches
+          if ('caches' in window) {
+            const cacheNames = await caches.keys();
+            await Promise.all(
+              cacheNames.map(cacheName => caches.delete(cacheName))
+            );
+            console.log('Cleared caches:', cacheNames);
+          }
+          
+          document.getElementById('status').textContent = '✅ Service worker cleared! Page will reload...';
+          
+          // Reload page to get fresh service worker
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+          
+        } catch (error) {
+          console.error('Error updating service worker:', error);
+          document.getElementById('status').textContent = '❌ Error updating service worker: ' + error.message;
+        }
+      }
+    }
+
+    function hardRefreshPage() {
+      // Alternative method to force service worker update
+      window.location.reload(true); // Hard refresh
+    }
+
+    async function forceNotificationPermission() {
+      document.getElementById('status').textContent = '🔔 Requesting notification permission...';
+      
+      try {
+        // Check current permission
+        console.log('Current permission:', Notification.permission);
+        
+        if (Notification.permission === 'denied') {
+          document.getElementById('status').textContent = '❌ Notifications are blocked. Please enable them manually in browser settings.';
+          alert('Notifications are blocked!\n\n1. Click the lock/info icon in the address bar\n2. Change Notifications from "Block" to "Allow"\n3. Refresh the page');
+          return;
+        }
+        
+        if (Notification.permission === 'granted') {
+          document.getElementById('status').textContent = '✅ Notifications already allowed!';
+          // Test with direct notification
+          new Notification('Permission Test', {
+            body: 'Notifications are working! Now try the subscription.',
+            icon: '/favicon.ico'
+          });
+          return;
+        }
+        
+        // Request permission
+        const permission = await Notification.requestPermission();
+        console.log('Permission result:', permission);
+        
+        if (permission === 'granted') {
+          document.getElementById('status').textContent = '✅ Permission granted! Now click "Subscribe to Notifications"';
+          // Test with direct notification
+          new Notification('Success!', {
+            body: 'Notifications enabled! Click "Subscribe to Notifications" now.',
+            icon: '/favicon.ico'
+          });
+        } else {
+          document.getElementById('status').textContent = '❌ Permission denied: ' + permission;
+          alert('Permission was denied. Please:\n\n1. Click the address bar icon (lock/bell)\n2. Allow notifications\n3. Refresh the page');
+        }
+        
+      } catch (error) {
+        console.error('Permission request failed:', error);
+        document.getElementById('status').textContent = '❌ Permission request failed: ' + error.message;
+      }
+    }
+
+    // Update status when page loads
+    setTimeout(updateStatus, 2000); // Give embed.js time to work
+
+    // Also listen for service worker updates
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.addEventListener('message', function(event) {
+        if (event.data.type === 'SUBSCRIPTION_UPDATED') {
+          updateStatus();
+        } else if (event.data.type === 'PUSH_RECEIVED') {
+          console.log('✅ Service worker received push event!');
+          document.getElementById('status').textContent = '✅ Push event received by service worker! Checking notification display...';
+        } else if (event.data.type === 'NOTIFICATION_SHOWN') {
+          console.log('✅ Service worker showNotification() completed!');
+          document.getElementById('status').textContent = '✅ Notification sent successfully! If you don\'t see it, check browser settings.';
+        } else if (event.data.type === 'NOTIFICATION_ERROR') {
+          console.error('❌ Notification error:', event.data.message);
+          document.getElementById('status').textContent = '❌ Notification error: ' + event.data.message;
+        }
+      });
+    }
+  </script>
+  </div>
+</body>
+</html>

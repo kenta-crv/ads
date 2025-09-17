@@ -1,5 +1,5 @@
 // Manifest File Configuration
-//= require plugins/paragraph_format.min.js
+// require plugins/paragraph_format.min.js
 //= require rails-ujs
 //= require activestorage
 //= require_tree .
@@ -72,8 +72,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }
   }
 
-  checkInInput.addEventListener('change', updatePrice);
-  checkOutInput.addEventListener('change', updatePrice);
+  if (checkInInput) checkInInput.addEventListener('change', updatePrice);
+  if (checkOutInput) checkOutInput.addEventListener('change', updatePrice);
 });
 
 // SwiperとFancyboxの初期化
@@ -152,6 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
   };
 
-  checkInField.addEventListener('change', calculatePrice);
-  checkOutField.addEventListener('change', calculatePrice);
+  if (checkInField) checkInField.addEventListener('change', calculatePrice);
+  if (checkOutField) checkOutField.addEventListener('change', calculatePrice);
 });
